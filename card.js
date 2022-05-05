@@ -52,7 +52,7 @@ function createDealerCards() {
     setCustomProperty(card, "--left", 50 - numCards*2)
     worldElem.append(card)
     getHandValue(dealerHand)
-    console.log(dealerHand)
+    //console.log(dealerHand)
 }
 
 export function shuffleCards() {
