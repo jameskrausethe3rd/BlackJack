@@ -1,11 +1,15 @@
 import { 
-    playerTurn,
-    dealerTurn,
     shuffleCards,
-    getPlayerScore,
-    resetHand,
+    resetHand} from "./card.js";
+import { 
+    playerTurn,
+    getPlayerScore} from "./player.js";
+import {
+    dealerTurn,
     dealerPlay,
-    checkLost} from "./card.js";
+    flipCard} from "./dealer.js"
+import {
+    checkLost} from "./calc.js"
 
 document.getElementById('start').addEventListener("click", handleStart);
 document.getElementById('hit').addEventListener("click", handleHit);
@@ -36,7 +40,6 @@ function setPixelToWorldScale() {
         worldToPixelScale = window.innerHeight / WORLD_HEIGHT
     }
 }
-
 function handleStart() {
     startScreenElem.classList.add("hide")
     hitButtonElem.classList.add("show")
@@ -50,7 +53,6 @@ function handleStart() {
     dealerTurn()
     updatePlayerScore()
 }
-
 function handleHit(){
     playerTurn()
     updatePlayerScore()
@@ -60,11 +62,18 @@ function updatePlayerScore(){
     if (checkLost(getPlayerScore())) return handleLost()
 }
 function handleLost() {
+    flipCard()
     alert("You lose")
     endGameScreen()
 }
 function handleWin() {
+    flipCard()
+    endGameScreen()
     alert("You win")
+}
+function handleWash() {
+    flipCard()
+    alert("Wash")
     endGameScreen()
 }
 function endGameScreen() {
@@ -72,6 +81,10 @@ function endGameScreen() {
     restartButtonElem.classList.remove("hide")
     quitButtonElem.classList.add("show")
     quitButtonElem.classList.remove("hide")
+    hitButtonElem.classList.add("hide")
+    hitButtonElem.classList.remove("show")
+    stayButtonElem.classList.add("hide")
+    stayButtonElem.classList.remove("show")
 }
 function handleQuit(){
     console.log("Quit!")
@@ -84,8 +97,21 @@ function handleRestart(){
 }
 function handleStay(){
     console.log("Stay!")
-    if (dealerPlay()) return handleWin()
-    else return handleLost()
+    flipCard()
+
+    const win = dealerPlay()
+    switch (win) {
+        case 0:
+            handleLost()
+            break;
+        case 1:
+            handleWin()
+            break;
+        case 2:
+            handleWash()
+            break;
+    }
+
 
 }
 function setButtons() {

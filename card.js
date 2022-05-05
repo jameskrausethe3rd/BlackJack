@@ -1,60 +1,14 @@
+import { resetDealerHand } from "./dealer.js";
+import { resetPlayerHand } from "./player.js";
+import {setCustomProperty} from "./updateCustomProperty.js";
+
 const worldElem = document.querySelector("[data-world]")
 
 var cards = generateDeck();
 
-import { 
-    setCustomProperty,
-    incrementCustomProperty,
-    getCustomProperty } from "./updateCustomProperty.js"
-
-let pickedCard
-let playerHand = []
-let dealerHand = []
-
-function dealCards() {
+export function dealCards() {
     return cards.pop()
 }
-export function playerTurn() {
-    createPlayerCards()
-}
-export function dealerTurn() {
-    createDealerCards()
-}
-function createPlayerCards() {
-    const numCards = document.getElementsByClassName("playerCard").length
-    const card = document.createElement("img")
-
-    card.dataset.card = true
-
-    pickedCard = dealCards()
-    playerHand.push(getCardValue(pickedCard))
-
-    card.src = "imgs/cards/" + pickedCard + ".png"
-    card.classList.add("playerCard")
-    setCustomProperty(card, "--left", 50 - numCards*2)
-    worldElem.append(card)
-    getHandValue(playerHand)
-}
-function createDealerCards() {
-    const numCards = document.getElementsByClassName("dealerCard").length
-    const card = document.createElement("img")
-    card.dataset.card = true
-    pickedCard = dealCards()
-    dealerHand.push(getCardValue(pickedCard))
-
-    if (numCards == 0) {
-        card.src = "imgs/card.png" 
-    } else{
-        card.src = "imgs/cards/" + pickedCard + ".png"
-    }
-
-    card.classList.add("dealerCard")
-    setCustomProperty(card, "--left", 50 - numCards*2)
-    worldElem.append(card)
-    getHandValue(dealerHand)
-    //console.log(dealerHand)
-}
-
 export function shuffleCards() {
     for (let i =0; i<1000; i++)
     {
@@ -66,7 +20,7 @@ export function shuffleCards() {
         cards[cardidx2] = t;
     }
 }
-function getCardValue(card) {
+export function getCardValue(card) {
     var str = card.split("_")[0];
     var parsed = parseInt(str,10)
 
@@ -88,26 +42,9 @@ function getCardValue(card) {
     } 
     return parsed;
 }
-function getHandValue(hand) {
-    var total = 0
-
-    for (let i = 0; i<hand.length; i++){
-        total += hand[i]
-    }
-    if (total > 21 && hand.includes(11)) {
-        total = total - 10
-    }
-    return total;
-}
-export function getPlayerScore (){
-    return getHandValue(playerHand)
-}
-export function getDealerScore (){
-    return getHandValue(dealerHand)
-}
 export function resetHand() {
-    playerHand = []
-    dealerHand = []
+    resetPlayerHand()
+    resetDealerHand()
     cards = generateDeck()
     document.querySelectorAll('.playerCard').forEach(card => {
         card.remove()
@@ -172,25 +109,9 @@ function generateDeck() {
         "queen_of_spades",
     ]
 }
-export function dealerPlay() {
-    while (getDealerScore() < 17){
-        dealerTurn()
-        checkLost(getDealerScore())
-    } 
-    if (getDealerScore() >= 17) {
-        if (checkLost(getDealerScore())) return true;
-        else{
-            return compareHand()
-        }
-    }
-
+export function addCard(card) {
+    worldElem.append(card)
 }
-function compareHand() {
-    return getPlayerScore() > getDealerScore()
-}
-
-export function checkLost(score){
-    if (score > 21){
-        return true
-    }
+export function setCard(card, numCards) {
+    setCustomProperty(card, "--left", 60 - numCards*10)
 }
