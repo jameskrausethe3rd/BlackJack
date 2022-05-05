@@ -1,0 +1,97 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.world {
+    overflow: hidden;
+    position: relative;
+}
+
+.score {
+    position: absolute;
+    font-size: 3vmin;
+    right: 1vmin;
+    top: 1vmin;
+}
+
+.start-button{
+    position: absolute;
+    font-size: 5vmin;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.table {
+    width: 85vmin;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: visible;
+}
+
+.deck {
+    position: absolute;
+    width: 8vmin;
+    top:35%;
+    left: 65%;
+    transform: translate(-50%,-50%);
+}
+
+.dealerCard {
+    position: absolute;
+    width: 8vmin;
+    top:35%;
+    left: calc(var(--left) * 1%);
+    transform: translate(-50%,-50%);
+}
+.playerCard {
+    position: absolute;
+    width: 8vmin;
+    top:65%;
+    left: calc(var(--left) * 1%);
+    transform: translate(-50%,-50%);
+}
+.hitButton {
+    position: absolute;
+    width: 8vmin;
+    top:65%;
+    left: 80%;
+    transform: translate(-50%,-50%);
+}
+.stayButton {
+    position: absolute;
+    width: 8vmin;
+    top:65%;
+    left: 70%;
+    transform: translate(-50%,-50%);
+}
+.quitButton {
+    position: absolute;
+    width: 20vmin;
+    top:50%;
+    left: 65%;
+    transform: translate(-50%,-50%);
+    z-index: 30;
+}
+.restartButton {
+    position: absolute;
+    width: 20vmin;
+    top:50%;
+    left: 35%;
+    transform: translate(-50%,-50%);
+    z-index: 30;
+}
