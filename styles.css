@@ -41,21 +41,13 @@ body {
 .show {
     display: visible;
 }
-
-.deck {
-    position: absolute;
-    width: 8vmin;
-    top:35%;
-    left: 75%;
-    transform: translate(-50%,-50%);
-}
-
 .dealerCard {
     position: absolute;
     width: 8vmin;
     top:35%;
     left: calc(var(--left) * 1%);
     transform: translate(-50%,-50%);
+    
 }
 .playerCard {
     position: absolute;
@@ -93,4 +85,59 @@ body {
     left: 35%;
     transform: translate(-50%,-50%);
     z-index: 30;
+}
+
+.deck {
+    position: absolute;
+    width: 0;
+    top:23%;
+    left: 70%;  
+}
+.dealerCardDiv {
+    position: absolute;
+    width: 0;
+    top:23%;
+    left: 55%;    
+}
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+}
+
+.flip-container, .front, .back {
+    width: 8vmin;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+    top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+.flip-container.flip .flipper {
+	transform: rotateY(180deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+}
+.front img, .back img {
+    width: 8vmin;
 }

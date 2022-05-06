@@ -6,8 +6,7 @@ import {
     getPlayerScore} from "./player.js";
 import {
     dealerTurn,
-    dealerPlay,
-    flipCard} from "./dealer.js"
+    dealerPlay} from "./dealer.js"
 import {
     checkLost} from "./calc.js"
 
@@ -31,6 +30,8 @@ const quitButtonElem = document.querySelector('[data-quit-button]')
 setPixelToWorldScale()
 window.addEventListener("resize", setPixelToWorldScale)
 
+let flipAnim
+
 function setPixelToWorldScale() {
     let worldToPixelScale
     if (window.innerWidth / window.innerHeight < WORLD_WIDTH/WORLD_HEIGHT)
@@ -42,6 +43,8 @@ function setPixelToWorldScale() {
 }
 function handleStart() {
     startScreenElem.classList.add("hide")
+    scoreElem.classList.add("show")
+    scoreElem.classList.remove("hide")
     hitButtonElem.classList.add("show")
     hitButtonElem.classList.remove("hide")
     stayButtonElem.classList.add("show")
@@ -52,6 +55,7 @@ function handleStart() {
     playerTurn()
     dealerTurn()
     updatePlayerScore()
+    flipAnim = document.querySelector("#flipCard")
 }
 function handleHit(){
     playerTurn()
@@ -62,19 +66,26 @@ function updatePlayerScore(){
     if (checkLost(getPlayerScore())) return handleLost()
 }
 function handleLost() {
-    flipCard()
-    alert("You lose")
-    endGameScreen()
+    flipAnim.classList.toggle("flip")
+    setTimeout(function() {
+        alert("You lose")
+        endGameScreen()
+      }, 2000);
 }
 function handleWin() {
-    flipCard()
-    endGameScreen()
-    alert("You win")
+    flipAnim.classList.toggle("flip")
+    setTimeout(function() {
+        alert("You win")
+        endGameScreen()
+      }, 2000);
 }
 function handleWash() {
-    flipCard()
-    alert("Wash")
-    endGameScreen()
+    flipAnim.classList.toggle("flip")
+    setTimeout(function() {
+        alert("Wash")
+        endGameScreen()
+      }, 2000);
+    
 }
 function endGameScreen() {
     restartButtonElem.classList.add("show")
@@ -88,16 +99,17 @@ function endGameScreen() {
 }
 function handleQuit(){
     console.log("Quit!")
+    location.reload(); 
 }
 function handleRestart(){
     console.log("Restart!")
     setButtons()
     resetHand()
+    clearDiv()
     handleStart()
 }
 function handleStay(){
     console.log("Stay!")
-    flipCard()
 
     const win = dealerPlay()
     switch (win) {
@@ -119,4 +131,9 @@ function setButtons() {
     restartButtonElem.classList.remove("show")
     quitButtonElem.classList.add("hide")
     quitButtonElem.classList.remove("show")
+}
+function clearDiv() {
+    const divs = document.querySelectorAll('[id=card]')
+    divs.forEach(element => element.remove());
+
 }

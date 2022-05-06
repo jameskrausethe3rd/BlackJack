@@ -17,14 +17,15 @@ export function getPlayerScore (){
 }
 function createPlayerCards() {
     const numCards = document.getElementsByClassName("playerCard").length
-    const card = document.createElement("img")
 
+    const card = document.createElement("img")
     card.dataset.card = true
 
     pickedCard = dealCards()
     playerHand.push(getCardValue(pickedCard))
 
     card.src = "imgs/cards/" + pickedCard + ".png"
+    card.title = pickedCard.replaceAll("_", " ")
     card.classList.add("playerCard")
     setCard(card, numCards)
     addCard(card)
