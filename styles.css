@@ -46,6 +46,7 @@ body {
     width: 8vmin;
     top:35%;
     left: calc(var(--left) * 1%);
+    animation: dealerCard1 1s;
     transform: translate(-50%,-50%);
     
 }
@@ -54,6 +55,7 @@ body {
     width: 8vmin;
     top:65%;
     left: calc(var(--left) * 1%);
+    animation: playerCard1 1s;
     transform: translate(-50%,-50%);
 }
 .hitButton {
@@ -97,7 +99,8 @@ body {
     position: absolute;
     width: 0;
     top:23%;
-    left: 55%;    
+    left: 55%;   
+    animation: dealerFlipCard 1s; 
 }
 /* entire container, keeps perspective */
 .flip-container {
@@ -142,9 +145,21 @@ body {
     width: 8vmin;
 }
  /* The animation code */
-@keyframes moveDeck {
+@keyframes playerCard1 {
     from {left: 70%;
             top:35%;}
-    to {top:53%;
-        left: 55.2%;}
+    to {top:65%;
+        left: --left;}
+}
+@keyframes dealerCard1 {
+    from {left: 70%;
+            top:35%;}
+    to {top:35%;
+        left: --left;}
+}
+@keyframes dealerFlipCard {
+    from {left: 70%;
+            top:23%;}
+    to {top:23%;
+        left: --left;}
 }

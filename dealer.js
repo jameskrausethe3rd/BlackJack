@@ -12,6 +12,7 @@ import { getPlayerScore } from "./player.js";
     let dealerHand = []
     let faceDown = ""
     let pickedCard
+    let flipAnim
 
 export function dealerTurn() {
     createDealerCards()
@@ -30,17 +31,18 @@ function createDealerCards() {
         const backCard = document.createElement("img")
         const frontCard = document.createElement("img")
         const cardDiv = document.createElement("div")
-        cardDiv.classList.add("dealerCardDiv")
-        cardDiv.setAttribute('id', "card")
         const cardDivFlipCont = document.createElement("div")
-        cardDivFlipCont.classList.add("flip-container")
-        cardDivFlipCont.setAttribute('id', "flipCard")
         const cardDivflipper = document.createElement("div")
-        cardDivflipper.classList.add("flipper")
         const cardFront = document.createElement("div")
-        cardFront.classList.add("front")
         const cardBack = document.createElement("div")
+
+        cardDiv.classList.add("dealerCardDiv")
+        cardDivFlipCont.classList.add("flip-container")
+        cardDivflipper.classList.add("flipper")
+        cardFront.classList.add("front")
         cardBack.classList.add("back")
+        cardDivFlipCont.setAttribute('id', "flipCard")
+        cardDiv.setAttribute('id', "card")
 
         frontCard.src = "imgs/card.png" 
         backCard.src = "imgs/cards/" + pickedCard + ".png"
@@ -65,7 +67,6 @@ function createDealerCards() {
         setCard(card, numCards)
         addCard(card)
     }
-    
     getHandValue(dealerHand)
 }
 export function dealerPlay() {

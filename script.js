@@ -66,25 +66,26 @@ function updatePlayerScore(){
     if (checkLost(getPlayerScore())) return handleLost()
 }
 function handleLost() {
-    flipAnim.classList.toggle("flip")
     setTimeout(function() {
+        flipAnim.classList.toggle("flip")
         alert("You lose")
         endGameScreen()
       }, 2000);
 }
 function handleWin() {
-    flipAnim.classList.toggle("flip")
     setTimeout(function() {
+        flipAnim.classList.toggle("flip")
         alert("You win")
         endGameScreen()
       }, 2000);
 }
 function handleWash() {
-    flipAnim.classList.toggle("flip")
     setTimeout(function() {
+        flipAnim.classList.toggle("flip")
         alert("Wash")
         endGameScreen()
       }, 2000);
+
     
 }
 function endGameScreen() {
