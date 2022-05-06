@@ -30,7 +30,7 @@ const quitButtonElem = document.querySelector('[data-quit-button]')
 setPixelToWorldScale()
 window.addEventListener("resize", setPixelToWorldScale)
 
-let flipAnim
+let flipDealerFaceDown
 
 function setPixelToWorldScale() {
     let worldToPixelScale
@@ -55,7 +55,18 @@ function handleStart() {
     playerTurn()
     dealerTurn()
     updatePlayerScore()
-    flipAnim = document.querySelector("#flipCard")
+    flipDealerFaceDown = document.querySelector("#faceDown")
+    flipFaceDown()
+}
+function flipFaceDown () {
+    setTimeout(function() {
+        var flipAnim = document.querySelectorAll("#faceUp")
+        flipAnim.forEach((flipAnim) => {
+            flipAnim.classList.toggle("flip")
+            flipAnim.setAttribute("id", "flipped")
+        })
+    }, 500)
+
 }
 function handleHit(){
     playerTurn()
@@ -67,21 +78,21 @@ function updatePlayerScore(){
 }
 function handleLost() {
     setTimeout(function() {
-        flipAnim.classList.toggle("flip")
+        flipDealerFaceDown.classList.toggle("flip")
         alert("You lose")
         endGameScreen()
       }, 2000);
 }
 function handleWin() {
     setTimeout(function() {
-        flipAnim.classList.toggle("flip")
+        flipDealerFaceDown.classList.toggle("flip")
         alert("You win")
         endGameScreen()
       }, 2000);
 }
 function handleWash() {
     setTimeout(function() {
-        flipAnim.classList.toggle("flip")
+        flipDealerFaceDown.classList.toggle("flip")
         alert("Wash")
         endGameScreen()
       }, 2000);
@@ -113,6 +124,7 @@ function handleStay(){
     console.log("Stay!")
 
     const win = dealerPlay()
+    flipFaceDown()
     switch (win) {
         case 0:
             handleLost()

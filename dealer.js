@@ -27,46 +27,49 @@ function createDealerCards() {
     pickedCard = dealCards()
     dealerHand.push(getCardValue(pickedCard))
 
+    const backCard = document.createElement("img")
+    const frontCard = document.createElement("img")
+    const cardDiv = document.createElement("div")
+    const cardDivFlipCont = document.createElement("div")
+    const cardDivflipper = document.createElement("div")
+    const cardFront = document.createElement("div")
+    const cardBack = document.createElement("div")
+
+    
+    cardDivFlipCont.classList.add("flip-container")
+    cardDivflipper.classList.add("flipper")
+    cardFront.classList.add("front")
+    cardBack.classList.add("back")
+    
+    cardDiv.setAttribute('id', "card")
+    
     if (numCards == 0) {
-        const backCard = document.createElement("img")
-        const frontCard = document.createElement("img")
-        const cardDiv = document.createElement("div")
-        const cardDivFlipCont = document.createElement("div")
-        const cardDivflipper = document.createElement("div")
-        const cardFront = document.createElement("div")
-        const cardBack = document.createElement("div")
-
-        cardDiv.classList.add("dealerCardDiv")
-        cardDivFlipCont.classList.add("flip-container")
-        cardDivflipper.classList.add("flipper")
-        cardFront.classList.add("front")
-        cardBack.classList.add("back")
-        cardDivFlipCont.setAttribute('id', "flipCard")
-        cardDiv.setAttribute('id', "card")
-
+        cardDiv.classList.add("dealerFaceDown")
+        cardDivFlipCont.setAttribute('id', "faceDown")
         frontCard.src = "imgs/card.png" 
         backCard.src = "imgs/cards/" + pickedCard + ".png"
 
-        cardDiv.appendChild(cardDivFlipCont)
-        cardDivFlipCont.appendChild(cardDivflipper)
-        cardDivflipper.appendChild(cardFront)
-        cardFront.appendChild(frontCard)
-        cardDivflipper.appendChild(cardBack)
-        cardBack.appendChild(backCard)
-        
-        
 
+        
         faceDown = "imgs/cards/" + pickedCard + ".png"
         addCard(cardDiv)
     } else{
-        const card = document.createElement("img")
-        card.src = "imgs/cards/" + pickedCard + ".png"
-        card.title = pickedCard.replaceAll("_", " ")
-        card.classList.add("dealerCard")
-        card.setAttribute('id',"card")
-        setCard(card, numCards)
-        addCard(card)
+        cardDiv.classList.add("dealerCard")
+        cardDivFlipCont.setAttribute('id', "faceUp")
+        frontCard.src = "imgs/card.png" 
+        backCard.src = "imgs/cards/" + pickedCard + ".png"
+        frontCard.title = pickedCard.replaceAll("_", " ")
+
+        setCard(cardDiv, numCards)
+        addCard(cardDiv)
+
     }
+    cardDiv.appendChild(cardDivFlipCont)
+    cardDivFlipCont.appendChild(cardDivflipper)
+    cardDivflipper.appendChild(cardFront)
+    cardFront.appendChild(frontCard)
+    cardDivflipper.appendChild(cardBack)
+    cardBack.appendChild(backCard)
     getHandValue(dealerHand)
 }
 export function dealerPlay() {
