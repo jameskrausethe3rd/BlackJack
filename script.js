@@ -16,10 +16,6 @@ document.getElementById('stay').addEventListener("click", handleStay);
 document.getElementById('quit').addEventListener("click", handleQuit);
 document.getElementById('restart').addEventListener("click", handleRestart);
 
-const WORLD_WIDTH = 100
-const WORLD_HEIGHT = 55
-
-const worldElem = document.querySelector('[data-world]')
 const scoreElem = document.querySelector('[data-score]')
 const startScreenElem = document.querySelector('[data-start-button]')
 const hitButtonElem = document.querySelector('[data-hit-button]')
@@ -27,20 +23,8 @@ const stayButtonElem = document.querySelector('[data-stay-button]')
 const restartButtonElem = document.querySelector('[data-restart-button]')
 const quitButtonElem = document.querySelector('[data-quit-button]')
 
-setPixelToWorldScale()
-window.addEventListener("resize", setPixelToWorldScale)
-
 let flipDealerFaceDown
 
-function setPixelToWorldScale() {
-    let worldToPixelScale
-    if (window.innerWidth / window.innerHeight < WORLD_WIDTH/WORLD_HEIGHT)
-    {
-        worldToPixelScale = window.innerWidth / WORLD_WIDTH
-    } else {
-        worldToPixelScale = window.innerHeight / WORLD_HEIGHT
-    }
-}
 function handleStart() {
     startScreenElem.classList.add("hide")
     scoreElem.classList.add("show")
@@ -49,16 +33,12 @@ function handleStart() {
     hitButtonElem.classList.remove("hide")
     stayButtonElem.classList.add("show")
     stayButtonElem.classList.remove("hide")
-    shuffleCards()
-    playerTurn()
-    dealerTurn()
-    playerTurn()
-    dealerTurn()
+    initialDeal()
     updatePlayerScore()
     flipDealerFaceDown = document.querySelector("#faceDown")
-    flipFaceDown()
+    flipNew()
 }
-function flipFaceDown () {
+function flipNew() {
     setTimeout(function() {
         var flipAnim = document.querySelectorAll("#faceUp")
         flipAnim.forEach((flipAnim) => {
@@ -66,7 +46,11 @@ function flipFaceDown () {
             flipAnim.setAttribute("id", "flipped")
         })
     }, 500)
-
+}
+function flipFaceDown() {
+    setTimeout(function() {
+        flipDealerFaceDown.classList.toggle("flip")
+        }, 500)
 }
 function handleHit(){
     playerTurn()
@@ -77,27 +61,25 @@ function updatePlayerScore(){
     if (checkLost(getPlayerScore())) return handleLost()
 }
 function handleLost() {
+    if (flipDealerFaceDown != null) {
+        flipFaceDown()
+    }
     setTimeout(function() {
-        flipDealerFaceDown.classList.toggle("flip")
         alert("You lose")
         endGameScreen()
       }, 2000);
 }
 function handleWin() {
     setTimeout(function() {
-        flipDealerFaceDown.classList.toggle("flip")
         alert("You win")
         endGameScreen()
       }, 2000);
 }
 function handleWash() {
     setTimeout(function() {
-        flipDealerFaceDown.classList.toggle("flip")
         alert("Wash")
         endGameScreen()
       }, 2000);
-
-    
 }
 function endGameScreen() {
     restartButtonElem.classList.add("show")
@@ -110,34 +92,33 @@ function endGameScreen() {
     stayButtonElem.classList.remove("show")
 }
 function handleQuit(){
-    console.log("Quit!")
     location.reload(); 
 }
 function handleRestart(){
-    console.log("Restart!")
     setButtons()
     resetHand()
     clearDiv()
     handleStart()
 }
 function handleStay(){
-    console.log("Stay!")
-
-    const win = dealerPlay()
     flipFaceDown()
-    switch (win) {
-        case 0:
-            handleLost()
-            break;
-        case 1:
-            handleWin()
-            break;
-        case 2:
-            handleWash()
-            break;
-    }
-
-
+    
+    setTimeout(function(){
+        const win = dealerPlay()
+        flipNew()
+        switch (win) {
+            case 0:
+                flipDealerFaceDown = null
+                handleLost()
+                break;
+            case 1:
+                handleWin()
+                break;
+            case 2:
+                handleWash()
+                break;
+        }
+    },1000)
 }
 function setButtons() {
     restartButtonElem.classList.add("hide")
@@ -149,4 +130,11 @@ function clearDiv() {
     const divs = document.querySelectorAll('[id=card]')
     divs.forEach(element => element.remove());
 
+}
+function initialDeal() {
+    shuffleCards()
+    playerTurn()
+    dealerTurn()
+    playerTurn()
+    dealerTurn()
 }
