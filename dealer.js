@@ -12,7 +12,6 @@ import { getPlayerScore } from "./player.js";
     let dealerHand = []
     let faceDown = ""
     let pickedCard
-    let flipAnim
 
 export function dealerTurn() {
     createDealerCards()
@@ -21,12 +20,9 @@ export function getDealerScore (){
     return getHandValue(dealerHand)
 }
 function createDealerCards() {
-    const numCards = document.querySelectorAll('[id=card]').length
-    console.log(numCards)
-
+    const numCards = document.querySelectorAll('[id=dealerCard]').length
     pickedCard = dealCards()
     dealerHand.push(getCardValue(pickedCard))
-
     const backCard = document.createElement("img")
     const frontCard = document.createElement("img")
     const cardDiv = document.createElement("div")
@@ -35,22 +31,17 @@ function createDealerCards() {
     const cardFront = document.createElement("div")
     const cardBack = document.createElement("div")
 
-    
     cardDivFlipCont.classList.add("flip-container")
     cardDivflipper.classList.add("flipper")
     cardFront.classList.add("front")
     cardBack.classList.add("back")
-    
-    cardDiv.setAttribute('id', "card")
+    cardDiv.setAttribute('id', "dealerCard")
     
     if (numCards == 0) {
         cardDiv.classList.add("dealerFaceDown")
         cardDivFlipCont.setAttribute('id', "faceDown")
         frontCard.src = "imgs/card.png" 
         backCard.src = "imgs/cards/" + pickedCard + ".png"
-
-
-        
         faceDown = "imgs/cards/" + pickedCard + ".png"
         addCard(cardDiv)
     } else{
@@ -59,10 +50,8 @@ function createDealerCards() {
         frontCard.src = "imgs/card.png" 
         backCard.src = "imgs/cards/" + pickedCard + ".png"
         frontCard.title = pickedCard.replaceAll("_", " ")
-
         setCard(cardDiv, numCards)
         addCard(cardDiv)
-
     }
     cardDiv.appendChild(cardDivFlipCont)
     cardDivFlipCont.appendChild(cardDivflipper)
@@ -82,7 +71,6 @@ export function dealerPlay() {
             return compareHand(getPlayerScore(), getDealerScore())
         }
     }
-
 }
 export function resetDealerHand() {
     dealerHand = []

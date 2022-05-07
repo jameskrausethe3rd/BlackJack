@@ -44,7 +44,7 @@ body {
 .playerCard {
     position: absolute;
     width: 8vmin;
-    top:65%;
+    top:60%;
     left: calc(var(--left) * 1%);
     animation: movePlayerCard 1s;
     transform: translate(-50%,-50%);
@@ -80,15 +80,15 @@ body {
     z-index: 30;
 }
 
-.deck {
+.deck img{
     position: absolute;
-    width: 0;
+    width: 8vmin;
     left: 70%;
     top:23%;
 }
 .dealerFaceDown {
     position: absolute;
-    width: 0;
+    width: 8vmin;
     top:23%;
     left: 55%;   
     animation: moveDealerCard 1s; 
@@ -146,9 +146,9 @@ body {
 }
  /* The animation code */
 @keyframes movePlayerCard {
-    from {left: 70%;
-            top:35%;}
-    to {top:65%;
+    from {left: 75%;
+            top:23%;}
+    to {top:60%;
         left: --left;}
 }
 @keyframes moveDealerCard {

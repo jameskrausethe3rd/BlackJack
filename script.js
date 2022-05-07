@@ -26,13 +26,10 @@ const quitButtonElem = document.querySelector('[data-quit-button]')
 let flipDealerFaceDown
 
 function handleStart() {
-    startScreenElem.classList.add("hide")
-    scoreElem.classList.add("show")
-    scoreElem.classList.remove("hide")
-    hitButtonElem.classList.add("show")
-    hitButtonElem.classList.remove("hide")
-    stayButtonElem.classList.add("show")
-    stayButtonElem.classList.remove("hide")
+    startScreenElem.classList.toggle("hide")
+    scoreElem.classList.toggle("hide")
+    hitButtonElem.classList.toggle("hide")
+    stayButtonElem.classList.toggle("hide")
     initialDeal()
     updatePlayerScore()
     flipDealerFaceDown = document.querySelector("#faceDown")
@@ -55,6 +52,7 @@ function flipFaceDown() {
 function handleHit(){
     playerTurn()
     updatePlayerScore()
+    flipNew()
 }
 function updatePlayerScore(){
     scoreElem.textContent = getPlayerScore()
@@ -82,14 +80,10 @@ function handleWash() {
       }, 2000);
 }
 function endGameScreen() {
-    restartButtonElem.classList.add("show")
-    restartButtonElem.classList.remove("hide")
-    quitButtonElem.classList.add("show")
-    quitButtonElem.classList.remove("hide")
-    hitButtonElem.classList.add("hide")
-    hitButtonElem.classList.remove("show")
-    stayButtonElem.classList.add("hide")
-    stayButtonElem.classList.remove("show")
+    restartButtonElem.classList.toggle("hide")
+    quitButtonElem.classList.toggle("hide")
+    hitButtonElem.classList.toggle("show")
+    stayButtonElem.classList.toggle("show")
 }
 function handleQuit(){
     location.reload(); 
@@ -98,9 +92,13 @@ function handleRestart(){
     setButtons()
     resetHand()
     clearDiv()
-    handleStart()
+    initialDeal()
+    updatePlayerScore()
+    flipDealerFaceDown = document.querySelector("#faceDown")
+    flipNew()
 }
 function handleStay(){
+    disableHitStay()
     flipFaceDown()
     
     setTimeout(function(){
@@ -121,15 +119,15 @@ function handleStay(){
     },1000)
 }
 function setButtons() {
+    enableHitStay()
     restartButtonElem.classList.add("hide")
     restartButtonElem.classList.remove("show")
     quitButtonElem.classList.add("hide")
     quitButtonElem.classList.remove("show")
 }
 function clearDiv() {
-    const divs = document.querySelectorAll('[id=card]')
+    const divs = document.querySelectorAll('[id=dealerCard]','[id=playerCard]')
     divs.forEach(element => element.remove());
-
 }
 function initialDeal() {
     shuffleCards()
@@ -137,4 +135,13 @@ function initialDeal() {
     dealerTurn()
     playerTurn()
     dealerTurn()
+    flipNew()
+}
+function disableHitStay() {
+    document.getElementById('hit').removeEventListener("click", handleHit);
+    document.getElementById('stay').removeEventListener("click", handleStay);  
+}
+function enableHitStay() {
+    document.getElementById('hit').addEventListener("click", handleHit);
+    document.getElementById('stay').addEventListener("click", handleStay);
 }

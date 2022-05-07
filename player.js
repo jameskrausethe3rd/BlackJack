@@ -16,19 +16,39 @@ export function getPlayerScore (){
     return getHandValue(playerHand)
 }
 function createPlayerCards() {
-    const numCards = document.getElementsByClassName("playerCard").length
-
-    const card = document.createElement("img")
-    card.dataset.card = true
+    const numCards = document.querySelectorAll('[id=playerCard]').length
+    console.log(numCards)
 
     pickedCard = dealCards()
     playerHand.push(getCardValue(pickedCard))
 
-    card.src = "imgs/cards/" + pickedCard + ".png"
-    card.title = pickedCard.replaceAll("_", " ")
-    card.classList.add("playerCard")
-    setCard(card, numCards)
-    addCard(card)
+    const backCard = document.createElement("img")
+    const frontCard = document.createElement("img")
+    const cardDiv = document.createElement("div")
+    const cardDivFlipCont = document.createElement("div")
+    const cardDivflipper = document.createElement("div")
+    const cardFront = document.createElement("div")
+    const cardBack = document.createElement("div")
+
+    cardDivFlipCont.classList.add("flip-container")
+    cardDivflipper.classList.add("flipper")
+    cardFront.classList.add("front")
+    cardBack.classList.add("back")
+    cardDiv.setAttribute('id', "playerCard")
+    cardDiv.classList.add("playerCard")
+    cardDivFlipCont.setAttribute('id', "faceUp")
+    frontCard.src = "imgs/card.png" 
+    backCard.src = "imgs/cards/" + pickedCard + ".png"
+    frontCard.title = pickedCard.replaceAll("_", " ")
+    setCard(cardDiv, numCards)
+    addCard(cardDiv)
+
+    cardDiv.appendChild(cardDivFlipCont)
+    cardDivFlipCont.appendChild(cardDivflipper)
+    cardDivflipper.appendChild(cardFront)
+    cardFront.appendChild(frontCard)
+    cardDivflipper.appendChild(cardBack)
+    cardBack.appendChild(backCard)
     getHandValue(playerHand)
 }
 export function resetPlayerHand() {
