@@ -10,11 +10,19 @@
 </head>
 <body>
     <div class="world" data-world>
-        <div class="deck">
+        <div class="deck hide" data-deck>
             <img src="imgs/card.png">
         </div>
-        <div class="score hide" data-score>0</div>
         <div class="start-button" id = "start" data-start-button>Click here to begin</div>
+        <div class="numBoardContainer">
+            <img src="imgs/numberBoard.jpg" class="numberBoard">
+            <div class="scoreText">Hand: </div>
+            <div class="chipsText">Bank: </div>
+            <div class="wagerText">Wager: </div>
+            <div class="score hide" data-score>0</div>
+            <div class="chips hide" data-chips>0</div>
+            <div class="wager hide" data-wager>0</div>
+        </div>
         <img src="imgs/table.png" class="table">
     </div> 
     <div class="buttons">
@@ -22,6 +30,35 @@
         <img src="imgs/stay.png" id ="stay" class="stayButton hide" data-stay-button>
         <img src="imgs/playAgain.png" id = "restart" class="restartButton hide" data-restart-button>
         <img src="imgs/quit.png" id = "quit" class="quitButton hide" data-quit-button>
-    </div>  
+        <img src="imgs/start.png" id = "play" class="playButton hide" data-play-button>
+    </div> 
+    <div class="bet hide" data-bets-button>
+        <table>
+            <tr>
+              <td id="bet1">1</td>
+              <td id="bet10">10</td>
+              <td id="bet50">50</td>
+              <td id="bet100">100</td>
+            </tr>
+          </table>
+    </div>
+    <!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2 data-header>Modal Header</h2>
+      </div>
+      <div class="modal-body">
+        <p data-body>Some text in the Modal Body</p>
+      </div>
+      <div class="modal-footer">
+        <h3 data-footer>Click anywhere to continue</h3>
+      </div>
+    </div>
+  
+  </div>
 </body>
 </html>

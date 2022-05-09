@@ -17,7 +17,6 @@ export function getPlayerScore (){
 }
 function createPlayerCards() {
     const numCards = document.querySelectorAll('[id=playerCard]').length
-    console.log(numCards)
 
     pickedCard = dealCards()
     playerHand.push(getCardValue(pickedCard))

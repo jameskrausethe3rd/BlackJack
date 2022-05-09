@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <form id="frm1" action="">
+        Chips: <input type="text" id="chip" name="fname"><br>
+        <input type="button" onclick="add()" value="Submit">
+      </form>
+
+      <script>
+        function add() {
+            var m = document.getElementById("chip").value;
+            const d = new Date();
+            d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
+            let expires = "expires="+d.toUTCString();
+            document.cookie = "chips=" + m + ";" + expires + ";"
+            alert("created");
+        }
+      </script>
+</body>
+</html>
