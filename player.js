@@ -5,6 +5,7 @@ import {
     setCard} from "./card.js";
 import { 
     getHandValue} from "./calc.js";
+import { getCookie, setCookie } from "./cookies.js";
 
 let playerHand = []
 let pickedCard
@@ -52,4 +53,33 @@ function createPlayerCards() {
 }
 export function resetPlayerHand() {
     playerHand = []
+}
+
+export function getWins() {
+    return parseInt(getCookie("wins"))
+}
+export function getLoss(){
+    return parseInt(getCookie("loss"))
+}
+export function getWash(){
+    return parseInt(getCookie("wash"))
+}
+export function getCurrStreak(){
+    return parseInt(getCookie("currStreak"))
+}
+export function getHighStreak(){
+    return parseInt(getCookie("highestStreak"))
+}
+export function getHighWin(){
+    return parseInt(getCookie("highestWin"))
+}
+export function newUserCookies() {
+    setCookie("wins", 0)
+    setCookie("loss", 0)
+    setCookie("wash", 0)
+    setCookie("currStreak", 0)
+    setCookie("highestStreak", 0)
+    setCookie("highestWin", 0)
+    setCookie("returningUser", "true")
+    setCookie("chip", 1000)
 }

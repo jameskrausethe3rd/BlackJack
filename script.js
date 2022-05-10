@@ -3,7 +3,14 @@ import {
     resetHand} from "./card.js";
 import { 
     playerTurn,
-    getPlayerScore} from "./player.js";
+    getPlayerScore,
+    newUserCookies,
+    getWins,
+    getLoss,
+    getWash,
+    getCurrStreak,
+    getHighStreak,
+    getHighWin} from "./player.js";
 import {
     dealerTurn,
     dealerPlay} from "./dealer.js"
@@ -18,7 +25,7 @@ import {
     saveChip,
     setBetAll} from "./chips.js"
 import { 
-    getCookie, 
+    getCookie,
     setCookie } from "./cookies.js";
 
 document.getElementById('start').addEventListener("click", declareBet);
@@ -46,8 +53,15 @@ const restartButtonElem = document.querySelector('[data-restart-button]')
 const quitButtonElem = document.querySelector('[data-quit-button]')
 const modalHeaderElem = document.querySelector('[data-header]')
 const modalBodyElem = document.querySelector('[data-body]')
+const numBoardElem = document.querySelector('[data-num-board]')
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
+const statsWin = document.querySelector("[data-stats-win]")
+const statsLoss = document.querySelector("[data-stats-loss]")
+const statsWash = document.querySelector("[data-stats-wash]")
+const statsStreak = document.querySelector("[data-stats-currstreak]")
+const statsHighStreak = document.querySelector("[data-stats-highstreak]")
+const statsHighWin = document.querySelector("[data-stats-highwin]")
 
 span.onclick = function() {
   modal.style.display = "none";
@@ -57,24 +71,27 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+window.onload = function() {
+    firstTimeUser()
+    updatePlayerStats()
+}
 
 let flipDealerFaceDown
 let totalBet
 
 function declareBet() {
-    setChips(getChips())
     firstTimeUser()
+    setChips(getChips())
     totalBet = 0
     updatePlayerChips()
     updatePlayerWager()
+    updatePlayerStats()
     betScreen()
 }
 function firstTimeUser() {
-    if (getCookie("newUser") != "true") {
-        setCookie("newUser", "true")
+    if (getCookie("returningUser") != "true") {
+        newUserCookies()
         displayModal("You're a new user!", "You have a starting bank of 1000")
-        setChips(1000)
-        saveChip()
     }
 }
 function updatePlayerChips(){
@@ -95,6 +112,7 @@ function betScreen() {
     stayButtonElem.classList.add("hide")
     restartButtonElem.classList.add("hide")
     quitButtonElem .classList.add("hide")
+    numBoardElem.classList.remove("hide")
 }
 function handleStart() {
     gameScreen()
@@ -153,6 +171,7 @@ function handleLost() {
         updatePlayerChips()
       }, 2000);
       saveChip()
+      updateStats("loss")
 }
 function handleWin() {
     setTimeout(function() {
@@ -161,6 +180,7 @@ function handleWin() {
         addChips(totalBet*2)
         updatePlayerChips()
         saveChip()
+        updateStats("win")
       }, 2000);
 }
 function handleWash() {
@@ -170,6 +190,7 @@ function handleWash() {
         addChips(totalBet)
         updatePlayerChips()
         saveChip()
+        updateStats("wash")
       }, 2000);
 }
 function handleQuit(){
@@ -253,6 +274,7 @@ function endGameScreen() {
     quitButtonElem .classList.remove("hide")
     updatePlayerChips()
     updatePlayerWager()
+    updatePlayerStats()
 }
 function resetWagers() {
     totalBet = 0
@@ -261,4 +283,38 @@ function displayModal(head, body) {
     modalHeaderElem.textContent = head
     modalBodyElem.textContent = body
     modal.style.display = "block";
+}
+function updateStats (outcome) {
+    var totalWins = getWins()
+    var totalLoss = getLoss()
+    var totalWash = getWash()
+    var currStreak = getCurrStreak()
+    var highestStreak = getHighStreak()
+    var highestWin = getHighWin()
+
+    if (outcome == "win"){
+        console.log("setting wins")
+        setCookie("wins", totalWins + 1)
+        setCookie("currStreak", currStreak + 1)
+
+        if (getCurrStreak() > highestStreak) {
+            setCookie("highestStreak", getCurrStreak())
+        }
+
+        if(totalBet*2 > highestWin) {
+            setCookie("highestWin", totalBet*2)
+        }
+    } else if (outcome == "wash") {
+        setCookie("wash", totalWash + 1)
+    } else if (outcome == "loss") {
+        setCookie("loss", totalLoss + 1)
+    }
+}
+function updatePlayerStats() {
+    statsWin.textContent = getWins()
+    statsLoss.textContent = getLoss()
+    statsWash.textContent = getWash()
+    statsStreak.textContent = getCurrStreak()
+    statsHighStreak.textContent = getHighStreak()
+    statsHighWin.textContent = getHighWin()
 }

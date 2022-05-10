@@ -11,7 +11,7 @@ export function addChips (num) {
     chips += num;
 }
 export function getChips () {
-    return getCookie("chip");
+    return parseInt(getCookie("chip"));
 }
 export function setBet (bet) {
     if (bet == chips) {

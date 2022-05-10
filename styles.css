@@ -24,7 +24,7 @@ body {
     position: relative;
 }
 .table {
-    width: 85vmin;
+    width: 95vmin;
 }
 
 /* User values ie: chips, score, wager, etc */
@@ -271,3 +271,19 @@ body {
     background-color: #5cb85c;
     color: white;
   }
+.statsContainer {
+    position: relative;    
+}
+.statsContainer img {
+    position: absolute;
+    top:0%;
+    left:0%;
+    width: 25vmin;
+    height: 22vmin;
+}
+.statsNum {
+    position: absolute;
+    font-size: 3vmin;
+    left: 1vmin;
+    top: 1vmin;   
+}
