@@ -15,8 +15,11 @@ import {
     getChipsVar,
     setBet,
     addChips,
-    saveChip} from "./chips.js"
-import { getCookie, setCookie } from "./cookies.js";
+    saveChip,
+    setBetAll} from "./chips.js"
+import { 
+    getCookie, 
+    setCookie } from "./cookies.js";
 
 document.getElementById('start').addEventListener("click", declareBet);
 document.getElementById('play').addEventListener("click", handleStart);
@@ -29,7 +32,6 @@ document.getElementById('bet10').addEventListener("click", () => bet(10));
 document.getElementById('bet50').addEventListener("click", () => bet(50));
 document.getElementById('bet100').addEventListener("click", () => bet(100));
 document.getElementById('betAll').addEventListener("click", () => bet("all"));
-
 
 const scoreElem = document.querySelector('[data-score]')
 const deckElem = document.querySelector('[data-deck]')
@@ -59,24 +61,6 @@ window.onclick = function(event) {
 let flipDealerFaceDown
 let totalBet
 
-function handleStart() {
-    gameScreen()
-    initialDeal()
-    updatePlayerScore()
-    updatePlayerChips()
-    flipDealerFaceDown = document.querySelector("#faceDown")
-    flipNew()
-}
-function winnings (outcome) {
-    if (outcome == "win"){
-        addChips(totalBet*2)
-    } else if (outcome == "lose") {
-        return
-    } else if (outcome == "wash") {
-        addChips(totalBet)
-    }
-
-}
 function declareBet() {
     setChips(getChips())
     firstTimeUser()
@@ -85,11 +69,46 @@ function declareBet() {
     updatePlayerWager()
     betScreen()
 }
+function firstTimeUser() {
+    if (getCookie("newUser") != "true") {
+        setCookie("newUser", "true")
+        displayModal("You're a new user!", "You have a starting bank of 1000")
+        setChips(1000)
+        saveChip()
+    }
+}
+function updatePlayerChips(){
+    chipsElem.textContent = getChipsVar()
+}
+function updatePlayerWager() {
+    wagerElem.textContent = totalBet
+}
+function betScreen() {
+    scoreElem.classList.add("hide")
+    deckElem.classList.add("hide")
+    wagerElem.classList.remove("hide")
+    chipsElem.classList.remove("hide")
+    betsElem.classList.remove("hide")
+    startScreenElem.classList.add("hide")
+    playButtonElem.classList.remove("hide")
+    hitButtonElem.classList.add("hide")
+    stayButtonElem.classList.add("hide")
+    restartButtonElem.classList.add("hide")
+    quitButtonElem .classList.add("hide")
+}
+function handleStart() {
+    gameScreen()
+    initialDeal()
+    updatePlayerScore()
+    updatePlayerChips()
+    flipDealerFaceDown = document.querySelector("#faceDown")
+    flipNew()
+}
 function bet(bet) {
     if (bet == "all") {
         var c = getChips()
         totalBet = c
-        setBet(c)
+        setBetAll(c)
     } else{
         if (getChips() < bet) {
             alert("Not enough chips")
@@ -124,28 +143,22 @@ function updatePlayerScore(){
     scoreElem.textContent = getPlayerScore()
     if (checkLost(getPlayerScore())) return handleLost()
 }
-function updatePlayerChips(){
-    chipsElem.textContent = getChipsVar()
-}
-function updatePlayerWager() {
-    wagerElem.textContent = totalBet
-}
 function handleLost() {
-    if (flipDealerFaceDown != null) {
+    if (flipDealerFaceDown) {
         flipFaceDown()
     }
     setTimeout(function() {
         displayModal("Loser!", "You lost!")
         endGameScreen()
-        winnings("lose")
         updatePlayerChips()
       }, 2000);
+      saveChip()
 }
 function handleWin() {
     setTimeout(function() {
         displayModal("Winner!", "You are a winner!")
         endGameScreen()
-        winnings("win")
+        addChips(totalBet*2)
         updatePlayerChips()
         saveChip()
       }, 2000);
@@ -154,7 +167,7 @@ function handleWash() {
     setTimeout(function() {
         displayModal("Wash", "Game was a wash")
         endGameScreen()
-        winnings("wash")
+        addChips(totalBet)
         updatePlayerChips()
         saveChip()
       }, 2000);
@@ -226,20 +239,6 @@ function gameScreen() {
     restartButtonElem.classList.add("hide")
     quitButtonElem .classList.add("hide")
 }
-function betScreen() {
-    scoreElem.classList.add("hide")
-    deckElem.classList.add("hide")
-    wagerElem.classList.remove("hide")
-    chipsElem.classList.remove("hide")
-    betsElem.classList.remove("hide")
-    startScreenElem.classList.add("hide")
-    playButtonElem.classList.remove("hide")
-    hitButtonElem.classList.add("hide")
-    stayButtonElem.classList.add("hide")
-    restartButtonElem.classList.add("hide")
-    quitButtonElem .classList.add("hide")
-    console.log(getChips())
-}
 function endGameScreen() {
     scoreElem.classList.remove("hide")
     deckElem.classList.remove("hide")
@@ -263,13 +262,3 @@ function displayModal(head, body) {
     modalBodyElem.textContent = body
     modal.style.display = "block";
 }
-function firstTimeUser() {
-    if (getCookie("newUser") != "true") {
-        setCookie("newUser", "true")
-        displayModal("You're a new user!", "You have a starting bank of 1000")
-        setChips(1000)
-        saveChip()
-    }
-}
-
-// NOT GETTING CORRECT CHIP AMOUNT WHEN PLACING BET AND REFRESHING THE PAGE

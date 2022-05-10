@@ -1,5 +1,6 @@
-import { setCookie,
-getCookie } from "./cookies.js";
+import { 
+    setCookie,
+    getCookie } from "./cookies.js";
 
 let chips
 
@@ -18,6 +19,9 @@ export function setBet (bet) {
     } else{
         chips -= bet
     }
+}
+export function setBetAll() {
+    chips = 0;
 }
 export function saveChip (){
     setCookie("chip", chips)
