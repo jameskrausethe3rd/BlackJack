@@ -33,6 +33,7 @@ document.getElementById('play').addEventListener("click", handleStart);
 document.getElementById('hit').addEventListener("click", handleHit);
 document.getElementById('stay').addEventListener("click", handleStay);
 document.getElementById('quit').addEventListener("click", handleQuit);
+document.getElementById('dataDrop').addEventListener("click", showStats);
 document.getElementById('restart').addEventListener("click", handleRestart);
 document.getElementById('bet1').addEventListener("click", () => bet(1));
 document.getElementById('bet10').addEventListener("click", () => bet(10));
@@ -172,6 +173,7 @@ function handleLost() {
       }, 2000);
       saveChip()
       updateStats("loss")
+      updatePlayerStats()
 }
 function handleWin() {
     setTimeout(function() {
@@ -181,6 +183,7 @@ function handleWin() {
         updatePlayerChips()
         saveChip()
         updateStats("win")
+        updatePlayerStats()
       }, 2000);
 }
 function handleWash() {
@@ -191,6 +194,7 @@ function handleWash() {
         updatePlayerChips()
         saveChip()
         updateStats("wash")
+        updatePlayerStats()
       }, 2000);
 }
 function handleQuit(){
@@ -308,13 +312,17 @@ function updateStats (outcome) {
         setCookie("wash", totalWash + 1)
     } else if (outcome == "loss") {
         setCookie("loss", totalLoss + 1)
+        setCookie("currStreak", 0)
     }
 }
 function updatePlayerStats() {
-    statsWin.textContent = getWins()
-    statsLoss.textContent = getLoss()
-    statsWash.textContent = getWash()
-    statsStreak.textContent = getCurrStreak()
-    statsHighStreak.textContent = getHighStreak()
-    statsHighWin.textContent = getHighWin()
+    statsWin.textContent = "Wins: " + getWins()
+    statsLoss.textContent = "Losses: " + getLoss()
+    statsWash.textContent = "Washes: " + getWash()
+    statsStreak.textContent = "Current Streak: " + getCurrStreak()
+    statsHighStreak.textContent = "Max Streak: " + getHighStreak()
+    statsHighWin.textContent = "Max won: " + getHighWin()
+}
+export function showStats () {
+    document.querySelector('[data-drop-down]').classList.toggle("hide")
 }

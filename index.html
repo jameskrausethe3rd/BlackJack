@@ -26,14 +26,16 @@
       <div class="wager hide" data-wager>0</div>
     </div>
     <div class="statsContainer">
-      <img src="imgs/numberBoard.jpg">
-      <div class="statsNum">
-        <div>Wins: <span data-stats-win>0</span></div>
-        <div>Loss: <span data-stats-loss>0</span></div>
-        <div>Wash: <span data-stats-wash>0</span></div>
-        <div>Streak: <span data-stats-currstreak>0</span></div>
-        <div>High Streak: <span data-stats-highstreak>0</span></div>
-        <div>High Winning: <span data-stats-highwin>0</span></div>
+      <div class="dropdown">
+        <button class="dropbtn" id="dataDrop">Stats</button>
+        <div id="myDropdown" class="dropdown-content hide" data-drop-down>
+          <span data-stats-win>0</span>
+          <span data-stats-loss>0</span>
+          <span data-stats-wash>0</span>
+          <span data-stats-currstreak>0</span>
+          <span data-stats-highstreak>0</span>
+          <span data-stats-highwin>0</span>
+        </div>
       </div>
     </div>
     <img src="imgs/table.png" class="table">
