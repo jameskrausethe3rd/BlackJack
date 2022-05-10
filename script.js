@@ -12,8 +12,10 @@ import {
 import {
     setChips,
     getChips,
+    getChipsVar,
     setBet,
-    addChips} from "./chips.js"
+    addChips,
+    saveChip} from "./chips.js"
 import { getCookie, setCookie } from "./cookies.js";
 
 document.getElementById('start').addEventListener("click", declareBet);
@@ -26,6 +28,7 @@ document.getElementById('bet1').addEventListener("click", () => bet(1));
 document.getElementById('bet10').addEventListener("click", () => bet(10));
 document.getElementById('bet50').addEventListener("click", () => bet(50));
 document.getElementById('bet100').addEventListener("click", () => bet(100));
+document.getElementById('betAll').addEventListener("click", () => bet("all"));
 
 
 const scoreElem = document.querySelector('[data-score]')
@@ -41,32 +44,17 @@ const restartButtonElem = document.querySelector('[data-restart-button]')
 const quitButtonElem = document.querySelector('[data-quit-button]')
 const modalHeaderElem = document.querySelector('[data-header]')
 const modalBodyElem = document.querySelector('[data-body]')
-const modalFooterElem = document.querySelector('[data-footer]')
+const modal = document.getElementById("myModal");
+const span = document.getElementsByClassName("close")[0];
 
-// Get the modal
-var modal = document.getElementById("myModal");
-// Get the button that opens the modal
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-// When the user clicks on the button, open the modal
-//btn.onclick = function() {
-//  modal.style.display = "block";
-//}
-// When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
 }
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 }
-
-
-
-
-
 
 let flipDealerFaceDown
 let totalBet
@@ -80,7 +68,6 @@ function handleStart() {
     flipNew()
 }
 function winnings (outcome) {
-    console.log(totalBet)
     if (outcome == "win"){
         addChips(totalBet*2)
     } else if (outcome == "lose") {
@@ -91,6 +78,7 @@ function winnings (outcome) {
 
 }
 function declareBet() {
+    setChips(getChips())
     firstTimeUser()
     totalBet = 0
     updatePlayerChips()
@@ -98,14 +86,20 @@ function declareBet() {
     betScreen()
 }
 function bet(bet) {
-    if (getChips() < bet) {
-        alert("Not enough chips")
-    } else {
-        totalBet = bet + totalBet
-        setBet(bet)
-        updatePlayerChips()
-        updatePlayerWager()
+    if (bet == "all") {
+        var c = getChips()
+        totalBet = c
+        setBet(c)
+    } else{
+        if (getChips() < bet) {
+            alert("Not enough chips")
+        } else {
+            totalBet = bet + totalBet
+            setBet(bet)
+        }
     }
+    updatePlayerChips()
+    updatePlayerWager()
 }
 function flipNew() {
     setTimeout(function() {
@@ -131,7 +125,7 @@ function updatePlayerScore(){
     if (checkLost(getPlayerScore())) return handleLost()
 }
 function updatePlayerChips(){
-    chipsElem.textContent = getChips()
+    chipsElem.textContent = getChipsVar()
 }
 function updatePlayerWager() {
     wagerElem.textContent = totalBet
@@ -153,6 +147,7 @@ function handleWin() {
         endGameScreen()
         winnings("win")
         updatePlayerChips()
+        saveChip()
       }, 2000);
 }
 function handleWash() {
@@ -161,6 +156,7 @@ function handleWash() {
         endGameScreen()
         winnings("wash")
         updatePlayerChips()
+        saveChip()
       }, 2000);
 }
 function handleQuit(){
@@ -174,6 +170,7 @@ function handleRestart(){
     resetWagers()
     updatePlayerChips()
     updatePlayerWager()
+    saveChip()
 }
 function handleStay(){
     disableHitStay()
@@ -241,6 +238,7 @@ function betScreen() {
     stayButtonElem.classList.add("hide")
     restartButtonElem.classList.add("hide")
     quitButtonElem .classList.add("hide")
+    console.log(getChips())
 }
 function endGameScreen() {
     scoreElem.classList.remove("hide")
@@ -266,12 +264,12 @@ function displayModal(head, body) {
     modal.style.display = "block";
 }
 function firstTimeUser() {
-    if (getCookie("newUser") == "true") {
-        console.log("Returning visitor")
-        return
-    } else{
+    if (getCookie("newUser") != "true") {
         setCookie("newUser", "true")
         displayModal("You're a new user!", "You have a starting bank of 1000")
         setChips(1000)
-    }  
+        saveChip()
+    }
 }
+
+// NOT GETTING CORRECT CHIP AMOUNT WHEN PLACING BET AND REFRESHING THE PAGE

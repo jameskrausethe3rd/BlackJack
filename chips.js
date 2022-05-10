@@ -5,16 +5,23 @@ let chips
 
 export function setChips (num) {
     chips = num;
-    setCookie("chip", chips)
 }
 export function addChips (num) {
     chips += num;
-    setCookie("chip", chips)
 }
 export function getChips () {
     return getCookie("chip");
 }
 export function setBet (bet) {
-    chips -= bet
+    if (bet == chips) {
+        chips = 0
+    } else{
+        chips -= bet
+    }
+}
+export function saveChip (){
     setCookie("chip", chips)
+}
+export function getChipsVar () {
+    return chips
 }

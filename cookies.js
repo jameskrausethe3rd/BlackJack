@@ -13,7 +13,6 @@ export function getCookie(cname) {
         c = c.substring(1);
       }
       if (c.indexOf(name) == 0) {
-        console.log(c.substring(name.length, c.length))
         return c.substring(name.length, c.length);
       }
     }

@@ -2,7 +2,7 @@
     box-sizing: border-box;
     user-select: none;
 }
-
+/* Main body */
 body {
     margin: 0;
     display: flex;
@@ -10,11 +10,24 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+.hide {
+    display: none;
+}
+
+.show {
+    display: visible;
+}
+
+/* Poker table element */
 .world {
     overflow: hidden;
     position: relative;
 }
+.table {
+    width: 85vmin;
+}
 
+/* User values ie: chips, score, wager, etc */
 .score {
     position: absolute;
     font-size: 3vmin;
@@ -40,17 +53,8 @@ body {
     top: 85%;  
     transform: translate(-50%,-50%); 
 }
-.start-button{
-    position: absolute;
-    font-size: 5vmin;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
 
-.table {
-    width: 85vmin;
-}
+/* User value labels ie: Score: Wager: etc */
 .scoreText {
     position: absolute;
     font-size: 3vmin;
@@ -76,21 +80,15 @@ body {
     width: 20vmin;
 }
 .numBoardContainer{
-        position: relative;
-}
-.hide {
-    display: none;
+    position: relative;
 }
 
-.show {
-    display: visible;
-}
-.playerCard {
+/* Gameplay buttons  */
+.start-button{
     position: absolute;
-    width: 8vmin;
-    top:60%;
-    left: calc(var(--left) * 1%);
-    animation: movePlayerCard 1s;
+    font-size: 5vmin;
+    top:50%;
+    left: 50%;
     transform: translate(-50%,-50%);
 }
 .hitButton {
@@ -113,7 +111,6 @@ body {
     top:85%;
     left: 65%;
     transform: translate(-50%,-50%);
-    z-index: 30;
 }
 .playButton {
     position: absolute;
@@ -121,7 +118,6 @@ body {
     top:85%;
     left: 65%;
     transform: translate(-50%,-50%);
-    z-index: 30;
 }
 .restartButton {
     position: absolute;
@@ -129,9 +125,25 @@ body {
     top:85%;
     left: 35%;
     transform: translate(-50%,-50%);
-    z-index: 30;
 }
 
+/* Stuff to do with cards */
+.playerCard {
+    position: absolute;
+    width: 8vmin;
+    top:60%;
+    left: calc(var(--left) * 1%);
+    animation: movePlayerCard 1s;
+    transform: translate(-50%,-50%);
+}
+.dealerCard {
+    position: absolute;
+    width: 8vmin;
+    top:23%;
+    left: calc(var(--left) * 1%);
+    animation: moveDealerCard 1s;
+    transform: translate(-50%,-50%); 
+}
 .deck img{
     position: absolute;
     width: 8vmin;
@@ -145,59 +157,8 @@ body {
     left: 55%;   
     animation: moveDealerCard 1s; 
 }
-.dealerCard {
-    position: absolute;
-    width: 8vmin;
-    top:23%;
-    left: calc(var(--left) * 1%);
-    animation: moveDealerCard 1s;
-    transform: translate(-50%,-50%);
-    
-}
-/* entire container, keeps perspective */
-.flip-container {
-	perspective: 1000px;
-}
-
-.flip-container, .front, .back {
-    width: 8vmin;
-}
-
-/* flip speed goes here */
-.flipper {
-	transition: 0.6s;
-	transform-style: preserve-3d;
-	position: relative;
-}
-
-/* hide back of pane during swap */
-.front, .back {
-	backface-visibility: hidden;
-	position: absolute;
-    top: 0;
-	left: 0;
-}
-
-/* front pane, placed above back */
-.front {
-	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
-}
-
-.flip-container.flip .flipper {
-	transform: rotateY(180deg);
-}
-
-/* back, initially hidden pane */
-.back {
-	transform: rotateY(180deg);
-}
-.front img, .back img {
-    width: 8vmin;
-}
  /* The animation code */
-@keyframes movePlayerCard {
+ @keyframes movePlayerCard {
     from {left: 75%;
             top:23%;}
     to {top:60%;
@@ -209,6 +170,45 @@ body {
     to {top:23%;
         left: --left;}
 }
+
+/* Flip card animation stuff */
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+}
+.flip-container, .front, .back {
+    width: 8vmin;
+}
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+    top: 0;
+	left: 0;
+}
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+.flip-container.flip .flipper {
+	transform: rotateY(180deg);
+}
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+}
+.front img, .back img {
+    width: 8vmin;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -223,7 +223,6 @@ body {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-  
   /* Modal Content */
   .modal-content {
     position: relative;
@@ -238,18 +237,15 @@ body {
     animation-name: animatetop;
     animation-duration: 0.4s
   }
-  
   /* Add Animation */
   @-webkit-keyframes animatetop {
     from {top:-300px; opacity:0} 
     to {top:0; opacity:1}
   }
-  
   @keyframes animatetop {
     from {top:-300px; opacity:0}
     to {top:0; opacity:1}
   }
-  
   /* The Close Button */
   .close {
     color: white;
@@ -257,22 +253,19 @@ body {
     font-size: 28px;
     font-weight: bold;
   }
-  
   .close:hover,
   .close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
   }
-  
   .modal-header {
     padding: 2px 16px;
     background-color: #5cb85c;
     color: white;
   }
-  
-  .modal-body {padding: 2px 16px;}
-  
+  .modal-body {
+      padding: 2px 16px;}
   .modal-footer {
     padding: 2px 16px;
     background-color: #5cb85c;
