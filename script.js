@@ -33,18 +33,21 @@ document.getElementById('play').addEventListener("click", handleStart);
 document.getElementById('hit').addEventListener("click", handleHit);
 document.getElementById('stay').addEventListener("click", handleStay);
 document.getElementById('quit').addEventListener("click", handleQuit);
-document.getElementById('dataDrop').addEventListener("click", showStats);
+document.getElementById('dataDrop').addEventListener("click", displayStats);
 document.getElementById('restart').addEventListener("click", handleRestart);
-document.getElementById('bet1').addEventListener("click", () => bet(1));
-document.getElementById('bet10').addEventListener("click", () => bet(10));
-document.getElementById('bet50').addEventListener("click", () => bet(50));
-document.getElementById('bet100').addEventListener("click", () => bet(100));
-document.getElementById('betAll').addEventListener("click", () => bet("all"));
+document.getElementById('bet1').addEventListener("click", () => playBet(1));
+document.getElementById('bet10').addEventListener("click", () => playBet(10));
+document.getElementById('bet50').addEventListener("click", () => playBet(50));
+document.getElementById('bet100').addEventListener("click", () => playBet(100));
+document.getElementById('betAll').addEventListener("click", () => playBet("all"));
+document.getElementById("resetBet").addEventListener("click", () => resetCurrentBet())
+
+const deckElem = document.querySelector('[data-deck]')
 
 const scoreElem = document.querySelector('[data-score]')
-const deckElem = document.querySelector('[data-deck]')
 const wagerElem = document.querySelector('[data-wager]')
 const chipsElem = document.querySelector('[data-chips]')
+
 const betsElem = document.querySelector('[data-bets-button]')
 const startScreenElem = document.querySelector('[data-start-button]')
 const playButtonElem = document.querySelector('[data-play-button]')
@@ -55,6 +58,7 @@ const quitButtonElem = document.querySelector('[data-quit-button]')
 const modalHeaderElem = document.querySelector('[data-header]')
 const modalBodyElem = document.querySelector('[data-body]')
 const numBoardElem = document.querySelector('[data-num-board]')
+
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
 const statsWin = document.querySelector("[data-stats-win]")
@@ -74,7 +78,7 @@ window.onclick = function(event) {
 }
 window.onload = function() {
     firstTimeUser()
-    updatePlayerStats()
+    updateDisplayedStats()
 }
 
 let flipDealerFaceDown
@@ -84,9 +88,9 @@ function declareBet() {
     firstTimeUser()
     setChips(getChips())
     totalBet = 0
-    updatePlayerChips()
-    updatePlayerWager()
-    updatePlayerStats()
+    updateCurrentChips()
+    updateCurrentWager()
+    updateDisplayedStats()
     betScreen()
 }
 function firstTimeUser() {
@@ -95,11 +99,11 @@ function firstTimeUser() {
         displayModal("You're a new user!", "You have a starting bank of 1000")
     }
 }
-function updatePlayerChips(){
-    chipsElem.textContent = getChipsVar()
+function updateCurrentChips(){
+    chipsElem.textContent = "Bank: " + getChipsVar()
 }
-function updatePlayerWager() {
-    wagerElem.textContent = totalBet
+function updateCurrentWager() {
+    wagerElem.textContent = "Wager: " + totalBet
 }
 function betScreen() {
     scoreElem.classList.add("hide")
@@ -119,11 +123,11 @@ function handleStart() {
     gameScreen()
     initialDeal()
     updatePlayerScore()
-    updatePlayerChips()
+    updateCurrentChips()
     flipDealerFaceDown = document.querySelector("#faceDown")
-    flipNew()
+    flipNewCard()
 }
-function bet(bet) {
+function playBet(bet) {
     if (bet == "all") {
         var c = getChips()
         totalBet = c
@@ -136,10 +140,10 @@ function bet(bet) {
             setBet(bet)
         }
     }
-    updatePlayerChips()
-    updatePlayerWager()
+    updateCurrentChips()
+    updateCurrentWager()
 }
-function flipNew() {
+function flipNewCard() {
     setTimeout(function() {
         var flipAnim = document.querySelectorAll("#faceUp")
         flipAnim.forEach((flipAnim) => {
@@ -148,7 +152,7 @@ function flipNew() {
         })
     }, 500)
 }
-function flipFaceDown() {
+function flipDealerCard() {
     setTimeout(function() {
         flipDealerFaceDown.classList.toggle("flip")
         }, 500)
@@ -156,34 +160,34 @@ function flipFaceDown() {
 function handleHit(){
     playerTurn()
     updatePlayerScore()
-    flipNew()
+    flipNewCard()
 }
 function updatePlayerScore(){
-    scoreElem.textContent = getPlayerScore()
+    scoreElem.textContent = "Score: " + getPlayerScore()
     if (checkLost(getPlayerScore())) return handleLost()
 }
 function handleLost() {
     if (flipDealerFaceDown) {
-        flipFaceDown()
+        flipDealerCard()
     }
     setTimeout(function() {
         displayModal("Loser!", "You lost!")
         endGameScreen()
-        updatePlayerChips()
+        updateCurrentChips()
       }, 2000);
       saveChip()
-      updateStats("loss")
-      updatePlayerStats()
+      updateSavedStats("loss")
+      updateDisplayedStats()
 }
 function handleWin() {
     setTimeout(function() {
         displayModal("Winner!", "You are a winner!")
         endGameScreen()
         addChips(totalBet*2)
-        updatePlayerChips()
+        updateCurrentChips()
         saveChip()
-        updateStats("win")
-        updatePlayerStats()
+        updateSavedStats("win")
+        updateDisplayedStats()
       }, 2000);
 }
 function handleWash() {
@@ -191,10 +195,10 @@ function handleWash() {
         displayModal("Wash", "Game was a wash")
         endGameScreen()
         addChips(totalBet)
-        updatePlayerChips()
+        updateCurrentChips()
         saveChip()
-        updateStats("wash")
-        updatePlayerStats()
+        updateSavedStats("wash")
+        updateDisplayedStats()
       }, 2000);
 }
 function handleQuit(){
@@ -204,19 +208,19 @@ function handleRestart(){
     enableHitStay()
     betScreen()
     resetHand()
-    clearDiv()
-    resetWagers()
-    updatePlayerChips()
-    updatePlayerWager()
+    clearCardDiv()
+    resetTotalBet()
+    updateCurrentChips()
+    updateCurrentWager()
     saveChip()
 }
 function handleStay(){
     disableHitStay()
-    flipFaceDown()
+    flipDealerCard()
     
     setTimeout(function(){
         const win = dealerPlay()
-        flipNew()
+        flipNewCard()
         switch (win) {
             case 0:
                 flipDealerFaceDown = null
@@ -231,7 +235,7 @@ function handleStay(){
         }
     },1000)
 }
-function clearDiv() {
+function clearCardDiv() {
     const divs = document.querySelectorAll('[id=dealerCard]','[id=playerCard]')
     divs.forEach(element => element.remove());
 }
@@ -241,7 +245,7 @@ function initialDeal() {
     dealerTurn()
     playerTurn()
     dealerTurn()
-    flipNew()
+    flipNewCard()
 }
 function disableHitStay() {
     document.getElementById('hit').removeEventListener("click", handleHit);
@@ -276,11 +280,11 @@ function endGameScreen() {
     stayButtonElem.classList.add("hide")
     restartButtonElem.classList.remove("hide")
     quitButtonElem .classList.remove("hide")
-    updatePlayerChips()
-    updatePlayerWager()
-    updatePlayerStats()
+    updateCurrentChips()
+    updateCurrentWager()
+    updateDisplayedStats()
 }
-function resetWagers() {
+function resetTotalBet() {
     totalBet = 0
 }
 function displayModal(head, body) {
@@ -288,7 +292,7 @@ function displayModal(head, body) {
     modalBodyElem.textContent = body
     modal.style.display = "block";
 }
-function updateStats (outcome) {
+function updateSavedStats (outcome) {
     var totalWins = getWins()
     var totalLoss = getLoss()
     var totalWash = getWash()
@@ -315,7 +319,7 @@ function updateStats (outcome) {
         setCookie("currStreak", 0)
     }
 }
-function updatePlayerStats() {
+function updateDisplayedStats() {
     statsWin.textContent = "Wins: " + getWins()
     statsLoss.textContent = "Losses: " + getLoss()
     statsWash.textContent = "Washes: " + getWash()
@@ -323,6 +327,12 @@ function updatePlayerStats() {
     statsHighStreak.textContent = "Max Streak: " + getHighStreak()
     statsHighWin.textContent = "Max won: " + getHighWin()
 }
-export function showStats () {
+export function displayStats () {
     document.querySelector('[data-drop-down]').classList.toggle("hide")
+}
+function resetCurrentBet() {
+    totalBet = 0
+    setChips(getChips())
+    updateCurrentChips()
+    updateCurrentWager()
 }

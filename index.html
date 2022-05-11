@@ -13,17 +13,36 @@
     <div class="deck hide" data-deck>
       <img src="imgs/card.png">
     </div>
+    <div class="bet hide" data-bets-button>
+      <table>
+        <tr class="chipPics">
+          <td id="bet1"><img src="imgs/chip1.png" alt=""></td>
+          <td id="bet10"><img src="imgs/chip10.png" alt=""></td>
+          <td id="bet50"><img src="imgs/chip50.png" alt=""></td>
+          <td id="bet100"><img src="imgs/chip100.png" alt=""></td>
+          <td id="betAll"><img src="imgs/chipAll.png" alt=""></td>
+        </tr>
+        <tr class="resetBetBUtton">
+          <td align="center" colspan="5" id="resetBet"><button>Reset</button></td>
+        </tr>
+      </table>
+    </div>
     <div class="start-button" id = "start" data-start-button>
       Click here to begin
     </div>
     <div class="numBoardContainer hide" data-num-board>
-      <img src="imgs/numberBoard.jpg" class="numberBoard">
-      <div class="scoreText">Hand: </div>
-      <div class="chipsText">Bank: </div>
-      <div class="wagerText">Wager: </div>
-      <div class="score hide" data-score>0</div>
-      <div class="chips hide" data-chips>0</div>
-      <div class="wager hide" data-wager>0</div>
+      <img src="imgs/numberBoard.jpg">
+      <div class="gameNum">
+        <div>
+          <span data-chips>0</span>
+        </div>
+        <div>
+          <span data-wager>0</span>
+        </div>
+        <div>
+          <span data-score>0</span>
+        </div>
+      </div>
     </div>
     <div class="statsContainer">
       <div class="dropdown">
@@ -47,17 +66,6 @@
     <img src="imgs/quit.png" id = "quit" class="quitButton hide" data-quit-button>
     <img src="imgs/start.png" id = "play" class="playButton hide" data-play-button>
   </div> 
-  <div class="bet hide" data-bets-button>
-    <table>
-      <tr>
-        <td id="bet1">1</td>
-        <td id="bet10">10</td>
-        <td id="bet50">50</td>
-        <td id="bet100">100</td>
-        <td id="betAll">All</td>
-      </tr>
-    </table>
-  </div>
   <div id="myModal" class="modal">
 
   <!-- Modal content -->
