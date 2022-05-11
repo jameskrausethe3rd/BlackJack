@@ -22,13 +22,13 @@
           <td id="bet100"><img src="imgs/chip100.png" alt=""></td>
           <td id="betAll"><img src="imgs/chipAll.png" alt=""></td>
         </tr>
-        <tr class="resetBetBUtton">
+        <tr class="resetBetButton">
           <td align="center" colspan="5" id="resetBet"><button>Reset</button></td>
         </tr>
       </table>
     </div>
     <div class="start-button" id = "start" data-start-button>
-      Click here to begin
+      <button class="playButton">Start</button>
     </div>
     <div class="numBoardContainer hide" data-num-board>
       <img src="imgs/numberBoard.jpg">
@@ -47,24 +47,29 @@
     <div class="statsContainer">
       <div class="dropdown">
         <button class="dropbtn" id="dataDrop">Stats</button>
-        <div id="myDropdown" class="dropdown-content hide" data-drop-down>
+        <div class="dropdown-content hide" data-drop-down>
           <span data-stats-win>0</span>
           <span data-stats-loss>0</span>
           <span data-stats-wash>0</span>
           <span data-stats-currstreak>0</span>
           <span data-stats-highstreak>0</span>
           <span data-stats-highwin>0</span>
+          <span><button id="resetuserstats">Reset</button></span>
         </div>
       </div>
     </div>
     <img src="imgs/table.png" class="table">
   </div> 
   <div class="buttons">
-    <img src="imgs/hit.png"  id = "hit" class="hitButton hide" data-hit-button>
-    <img src="imgs/stay.png" id ="stay" class="stayButton hide" data-stay-button>
-    <img src="imgs/playAgain.png" id = "restart" class="restartButton hide" data-restart-button>
-    <img src="imgs/quit.png" id = "quit" class="quitButton hide" data-quit-button>
-    <img src="imgs/start.png" id = "play" class="playButton hide" data-play-button>
+    <div>
+      <button class="stayButton hide" id = "stay" data-stay-button>Stay</button>
+      <button class="hitButton hide" id = "hit" data-hit-button>Hit</button>
+    </div>
+    <div>
+      <button class="quitButton hide" id = "quit" data-quit-button>Quit</button>
+      <button class="restartButton hide" id = "restart" data-restart-button>Play Again</button>
+    </div>
+    <button class="playButton hide" id = "play" data-play-button>Start</button>
   </div> 
   <div id="myModal" class="modal">
 

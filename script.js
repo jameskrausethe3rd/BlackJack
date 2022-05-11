@@ -41,6 +41,7 @@ document.getElementById('bet50').addEventListener("click", () => playBet(50));
 document.getElementById('bet100').addEventListener("click", () => playBet(100));
 document.getElementById('betAll').addEventListener("click", () => playBet("all"));
 document.getElementById("resetBet").addEventListener("click", () => resetCurrentBet())
+document.getElementById("resetuserstats").addEventListener("click", () => resetUserStats())
 
 const deckElem = document.querySelector('[data-deck]')
 
@@ -59,6 +60,8 @@ const modalHeaderElem = document.querySelector('[data-header]')
 const modalBodyElem = document.querySelector('[data-body]')
 const numBoardElem = document.querySelector('[data-num-board]')
 
+const statsElem = document.getElementById('dataDrop')
+
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
 const statsWin = document.querySelector("[data-stats-win]")
@@ -74,6 +77,9 @@ span.onclick = function() {
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+  } if (event.target != statsElem) {
+      document.querySelector('[data-drop-down]').classList.add("hide")
+      document.getElementById("dataDrop").classList.remove("btnRadius")
   }
 }
 window.onload = function() {
@@ -327,12 +333,17 @@ function updateDisplayedStats() {
     statsHighStreak.textContent = "Max Streak: " + getHighStreak()
     statsHighWin.textContent = "Max won: " + getHighWin()
 }
-export function displayStats () {
+function displayStats () {
     document.querySelector('[data-drop-down]').classList.toggle("hide")
+    document.getElementById("dataDrop").classList.toggle("btnRadius")
 }
 function resetCurrentBet() {
     totalBet = 0
     setChips(getChips())
     updateCurrentChips()
     updateCurrentWager()
+}
+function resetUserStats() {
+    newUserCookies()
+    updateDisplayedStats()
 }
