@@ -9,9 +9,9 @@ import {
     compareHand} from "./calc.js";
 import { getPlayerScore } from "./player.js";
 
-    let dealerHand = []
-    let faceDown = ""
-    let pickedCard
+let dealerHand = []
+let faceDown = ""
+let pickedCard
 
 export function dealerTurn() {
     createDealerCards()
@@ -41,7 +41,7 @@ function createDealerCards() {
         cardDiv.classList.add("dealerFaceDown")
         cardDivFlipCont.setAttribute('id', "faceDown")
         frontCard.src = "imgs/card.png" 
-        backCard.src = "imgs/cards/" + pickedCard + ".png"
+        backCard.src = "imgs/card.png"
         faceDown = "imgs/cards/" + pickedCard + ".png"
         addCard(cardDiv)
     } else{
@@ -78,4 +78,7 @@ export function resetDealerHand() {
 export function flipCard() {
     document.querySelector('.dealerCard').src = faceDown;
     return
+}
+export function getFaceDown() {
+    return faceDown
 }

@@ -16,10 +16,6 @@ body {
     display: none;
 }
 
-.show {
-    display: visible;
-}
-
 /* Poker table element */
 .world {
     overflow: hidden;
@@ -30,24 +26,6 @@ body {
 }
 
 /* User values ie: chips, score, wager, etc */
-.score {
-    position: absolute;
-    font-size: 3vmin;
-    right: 1vmin;
-    top: 9vmin;
-}
-.chips {
-    position: absolute;
-    font-size: 3vmin;
-    right: 1vmin;
-    top: 1vmin;
-}
-.wager {
-    position: absolute;
-    font-size: 3vmin;
-    right: 1vmin;
-    top: 5vmin;
-}
 .bet {
     position: absolute;
     right: 50%;
@@ -102,6 +80,7 @@ body {
 	font-weight:bold;
     width: 20vmin;
     height: 20vmin;
+    padding: 0;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #c70067;
 }
@@ -126,6 +105,7 @@ body {
 	font-weight:bold;
 	width: 20vmin;
     height: 20vmin;
+    padding: 0;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #528ecc;
     margin-right: 4vmin;
@@ -151,6 +131,7 @@ body {
 	font-weight:bold;
 	width: 20vmin;
     height: 20vmin;
+    padding: 0;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #b23e35;
     margin-left: 4vmin;
@@ -176,6 +157,7 @@ body {
 	font-weight:bold;
 	width: 20vmin;
     height: 20vmin;
+    padding: 0;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #5b8a3c;
     margin-left: 4vmin;
@@ -201,6 +183,7 @@ body {
 	font-weight:bold;
 	width: 20vmin;
     height: 20vmin;
+    padding: 0;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffffff;
     margin-right: 4vmin;
@@ -213,9 +196,6 @@ body {
 	position:relative;
 	top:1px;
 }
-.chipPics img {
-    width:15vmin;
-}
 .resetBetButton td {
     column-span: 5;
 }
@@ -225,6 +205,7 @@ body {
 	background-color:#eae0c2;
 	border-radius:15%;
 	border:1px solid #ccc2a6;
+    padding: 0;
 	cursor:pointer;
 	color:#505739;
 	font-family:Arial;
@@ -239,7 +220,23 @@ body {
     background:linear-gradient(to bottom, #9ba892 5%, #dbe6c4 100%);
 	background-color:#9ba892;   
 }
-
+.resetBetButton button:active {
+	position:relative;
+	top:1px;  
+}
+.chipPics img {
+    cursor:pointer;
+    filter: drop-shadow(5px 5px 5px #222);
+    width:15vmin;
+}
+.chipPics img:hover {
+	position:relative;
+	top:1px;
+}
+.chipPics img:active {
+	position:relative;
+	top:2px;
+}
 
 /* Stuff to do with cards */
 .playerCard {
@@ -388,7 +385,8 @@ body {
 
 /* Dropdown Button */
 .statsContainer {
-    position: relative;    
+    position: absolute; 
+    left: 0%;   
 }
 .dropbtn {
 	box-shadow: 0px 10px 14px -7px #1c1b18;
@@ -433,7 +431,7 @@ body {
 .dropdown-content span {
     right: 0%;
     color: black;
-    padding: 1vmin 1vmin;
+    padding: .5vmin 1vmin;
     text-decoration: none;
     display: block;
 }

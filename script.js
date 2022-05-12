@@ -13,7 +13,8 @@ import {
     getHighWin} from "./player.js";
 import {
     dealerTurn,
-    dealerPlay} from "./dealer.js"
+    dealerPlay,
+    getFaceDown} from "./dealer.js"
 import {
     checkLost} from "./calc.js"
 import {
@@ -159,6 +160,8 @@ function flipNewCard() {
     }, 500)
 }
 function flipDealerCard() {
+    let face = document.getElementById("faceDown").firstElementChild.lastElementChild.firstElementChild
+    face.src = getFaceDown()
     setTimeout(function() {
         flipDealerFaceDown.classList.toggle("flip")
         }, 500)
