@@ -160,7 +160,6 @@ body {
     padding: 0;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #5b8a3c;
-    margin-left: 4vmin;
 }
 .restartButton:hover {
 	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
@@ -186,7 +185,7 @@ body {
     padding: 0;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffffff;
-    margin-right: 4vmin;
+    margin-right: 8vmin;
 }
 .quitButton:hover {
 	background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
@@ -231,11 +230,11 @@ body {
 }
 .chipPics img:hover {
 	position:relative;
-	top:1px;
+	top:2px;
 }
 .chipPics img:active {
 	position:relative;
-	top:2px;
+	top:4px;
 }
 
 /* Stuff to do with cards */
@@ -361,7 +360,7 @@ body {
 .close {
     color: white;
     float: right;
-    font-size: 3vmin;
+    font-size: 5vmin;
     font-weight: bold;
 }
 .close:hover, .close:focus {
@@ -370,15 +369,15 @@ body {
     cursor: pointer;
 }
 .modal-header {
-    padding: 2px 16px;
+    padding: 1vmin 4vmin;
     background-color: #9d79bc;
     color: white;
 }
 .modal-body {
-      padding: 2px 16px;
+      padding: 1vmin 4vmin;
 }
 .modal-footer {
-    padding: 2px 16px;
+    padding: 1vmin 4vmin;
     background-color: #9d79bc;
     color: white;
 }
@@ -392,13 +391,13 @@ body {
 	box-shadow: 0px 10px 14px -7px #1c1b18;
 	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
 	background-color:#ededed;
-	border-radius:10px;
+	border-radius:1vmin;
 	border:.2vmin solid #d6bcd6;
 	display:inline-block;
 	cursor:pointer;
 	color:#3a8a9e;
 	font-family:Arial;
-	font-size:17px;
+	font-size:2.2vmin;
 	padding:1vmin 5vmin;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #e1e2ed;

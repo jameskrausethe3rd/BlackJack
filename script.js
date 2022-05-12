@@ -34,6 +34,7 @@ document.getElementById('play').addEventListener("click", handleStart);
 document.getElementById('hit').addEventListener("click", handleHit);
 document.getElementById('stay').addEventListener("click", handleStay);
 document.getElementById('quit').addEventListener("click", handleQuit);
+document.getElementById('quit').addEventListener("click", handleQuit);
 document.getElementById('dataDrop').addEventListener("click", displayStats);
 document.getElementById('restart').addEventListener("click", handleRestart);
 document.getElementById('bet1').addEventListener("click", () => playBet(1));
@@ -114,6 +115,7 @@ function updateCurrentWager() {
 }
 function betScreen() {
     scoreElem.classList.add("hide")
+    quitButtonElem.classList.remove("hide")
     deckElem.classList.add("hide")
     wagerElem.classList.remove("hide")
     chipsElem.classList.remove("hide")
@@ -123,7 +125,6 @@ function betScreen() {
     hitButtonElem.classList.add("hide")
     stayButtonElem.classList.add("hide")
     restartButtonElem.classList.add("hide")
-    quitButtonElem .classList.add("hide")
     numBoardElem.classList.remove("hide")
 }
 function handleStart() {
@@ -275,7 +276,7 @@ function gameScreen() {
     hitButtonElem.classList.remove("hide")
     stayButtonElem.classList.remove("hide")
     restartButtonElem.classList.add("hide")
-    quitButtonElem .classList.add("hide")
+    quitButtonElem.classList.add("hide")
 }
 function endGameScreen() {
     scoreElem.classList.remove("hide")
