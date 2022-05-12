@@ -4,6 +4,7 @@
 }
 /* Main body */
 body {
+    font-family:Arial;
     margin-top: 10vmin;
     display: flex;
     background-color: #9d79bc;
@@ -437,4 +438,18 @@ body {
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
     background-color: #ddd
+}
+
+.playerList {
+    position: absolute;
+    top: 70%;
+    padding: 2vmin;
+    outline: 5px solid black;
+}
+.playerList span {
+    display: table;
+    margin: 0 auto;
+}
+.you {
+    color: gold;
 }

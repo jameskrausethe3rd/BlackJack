@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" type="module"></script>
 </head>
 <body>
   <div class="world" data-world>
@@ -71,21 +70,42 @@
       <button class="restartButton hide" id = "restart" data-restart-button>Play Again</button>
     </div>
   </div> 
+  <div class="playerList" id="playerList">
+  <span>Current Players</span>
+  </div>
   <div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="close">&times;</span>
-      <h2 data-header>Modal Header</h2>
-    </div>
-    <div class="modal-body">
-      <p data-body>Some text in the Modal Body</p>
-    </div>
-    <div class="modal-footer">
-      <h3 data-footer>Click anywhere to continue</h3>
-    </div>
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2 data-header>Modal Header</h2>
+      </div>
+      <div class="modal-body">
+        <p data-body>Some text in the Modal Body</p>
+      </div>
+      <div class="modal-footer">
+        <h3 data-footer>Click anywhere to continue</h3>
+      </div>
     </div>
   </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1jalXEElO0haKQ_m7lVVfZIlZn_h8kjI",
+      authDomain: "blackjack-2441d.firebaseapp.com",
+      databaseURL: "https://blackjack-2441d-default-rtdb.firebaseio.com",
+      projectId: "blackjack-2441d",
+      storageBucket: "blackjack-2441d.appspot.com",
+      messagingSenderId: "227266507161",
+      appId: "1:227266507161:web:9bc9633fb7a20b2d3de308"
+    };
+    firebase.initializeApp(firebaseConfig)
+    </script>
+
+  <script src="script.js" type="module"></script>
+  <script src="/multiplayer.js"></script>
 </body>
 </html>
