@@ -130,10 +130,7 @@ function betScreen() {
 function handleStart() {
     gameScreen()
     initialDeal()
-    updatePlayerScore()
     updateCurrentChips()
-    flipDealerFaceDown = document.querySelector("#faceDown")
-    flipNewCard()
 }
 function playBet(bet) {
     if (bet == "all") {
@@ -167,10 +164,11 @@ function flipDealerCard() {
         flipDealerFaceDown.classList.toggle("flip")
         }, 500)
 }
-function handleHit(){
+async function handleHit(){
     playerTurn()
-    updatePlayerScore()
     flipNewCard()
+    await sleep(500);
+    updatePlayerScore()
 }
 function updatePlayerScore(){
     scoreElem.textContent = "Score: " + getPlayerScore()
@@ -249,13 +247,27 @@ function clearCardDiv() {
     const divs = document.querySelectorAll('[id=dealerCard]','[id=playerCard]')
     divs.forEach(element => element.remove());
 }
-function initialDeal() {
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function initialDeal() {
     shuffleCards()
+    updatePlayerScore()
     playerTurn()
+    flipNewCard()
+    await sleep(500);
+    updatePlayerScore()
     dealerTurn()
+    await sleep(500);
+    flipNewCard()
     playerTurn()
+    await sleep(500);
+    flipNewCard()
+    await sleep(200);
+    updatePlayerScore()
     dealerTurn()
     flipNewCard()
+    flipDealerFaceDown = document.querySelector("#faceDown")
 }
 function disableHitStay() {
     document.getElementById('hit').removeEventListener("click", handleHit);
