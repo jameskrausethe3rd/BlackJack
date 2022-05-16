@@ -37,7 +37,7 @@ document.getElementById('quit').addEventListener("click", handleQuit);
 document.getElementById('quit').addEventListener("click", handleQuit);
 document.getElementById('dataDrop').addEventListener("click", displayStats);
 document.getElementById('restart').addEventListener("click", handleRestart);
-document.getElementById('bet1').addEventListener("click", () => playBet(1));
+document.getElementById('bet1').addEventListener("click", () => playBet("custom"));
 document.getElementById('bet10').addEventListener("click", () => playBet(10));
 document.getElementById('bet50').addEventListener("click", () => playBet(50));
 document.getElementById('bet100').addEventListener("click", () => playBet(100));
@@ -133,6 +133,20 @@ function playBet(bet) {
         var c = getChips()
         totalBet = c
         setBetAll(c)
+    } else if (bet == "custom"){
+
+        let betAmount = prompt("Please enter bet amount", "69");
+        if (betAmount == null || betAmount == "") {
+            return
+        } else {
+            betAmount = parseInt(betAmount)
+            if (getChips() < betAmount) {
+                alert("Not enough chips")
+            } else {
+                totalBet = betAmount + totalBet
+                setBet(betAmount)
+            }
+        } 
     } else{
         if (getChips() < bet) {
             alert("Not enough chips")
@@ -206,7 +220,6 @@ function handleWash() {
       }, 2000);
 }
 function handleQuit(){
-    //location.reload(); 
     mainMenuScreen();
 }
 function handleRestart(){

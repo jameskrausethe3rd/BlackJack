@@ -490,8 +490,9 @@ body {
   
   /* Style the collapsible content. Note: hidden by default */
   .playerNameContent {
-    display: none;
+    max-height: 0;
     overflow: hidden;
+    transition: max-height 0.2s ease-out;
     background-color: #ccc;
   } 
 

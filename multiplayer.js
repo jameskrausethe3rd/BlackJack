@@ -77,10 +77,10 @@ function createName() {
                             this.classList.toggle("active");
                             var child = this.firstChild;
                             var content = child.nextElementSibling.nextElementSibling
-                            if (content.style.display === "block") {
-                            content.style.display = "none";
+                            if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
                             } else {
-                            content.style.display = "block";
+                            content.style.maxHeight = content.scrollHeight + "px";
                             }
                         });
                     }
@@ -134,6 +134,10 @@ function createName() {
 
         //Resets cards in hand
         document.getElementById('restart').addEventListener("click", () => {
+            playerRef.update({
+                cardsInHand : null})
+            });
+        document.getElementById('quit').addEventListener("click", () => {
             playerRef.update({
                 cardsInHand : null})
             });
