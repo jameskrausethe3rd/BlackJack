@@ -3,7 +3,7 @@ function randomFromArray (array) {
 }
 
 function createName() {
-    const prefix = randomFromArray(["GUNG", "MID", "TRASHY", "TOXIC", "SCUMMY", "HOT"]);
+    const prefix = randomFromArray(["other", "new", "good", "high", "old", "great", "big", "American", "small", "large", "national", "young", "different", "black", "long", "little", "important", "political", "bad", "white", "real", "best", "right", "social", "only", "public", "sure", "low", "early", "able", "human", "local", "late", "hard", "major", "better", "economic", "strong", "possible", "whole", "free", "military", "true", "federal", "international", "full", "special", "easy", "clear", "recent", "certain", "personal", "open", "red", "difficult", "available", "likely", "short", "single", "medical", "current", "wrong", "private", "past", "foreign", "fine", "common", "poor", "natural", "significant", "similar", "hot", "dead", "central", "happy", "serious", "ready", "simple", "left", "physical", "general", "environmental", "financial", "blue", "democratic", "dark", "various", "entire", "close", "legal", "religious", "cold", "final", "main", "green", "nice", "huge", "popular", "traditional", "cultural", "GUNG", "MID", "TRASHY", "TOXIC", "SCUMMY", "HOT"]).toUpperCase();
     const animal = randomFromArray(["BEAR", "CAT", "DOG", "PANGOLIN", "PANDA", "GIRAFFE"]);
 
     return `${prefix} ${animal}`;
@@ -45,12 +45,11 @@ function createName() {
             playerElement.innerHTML = (`
                 <div class="playerNameContainer">
                     <span class="playerName"></span>
+                    <img src="imgs/card.png" width="10%">
                 </div>`
             );
             playerElements[addedPlayer.id] = playerElement;
-
             playerElement.querySelector(".playerName").innerText = addedPlayer.name;
-    
             playerListContainer.appendChild(playerElement);
         })
 
