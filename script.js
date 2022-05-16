@@ -46,11 +46,9 @@ document.getElementById("resetBet").addEventListener("click", () => resetCurrent
 document.getElementById("resetuserstats").addEventListener("click", () => resetUserStats())
 
 const deckElem = document.querySelector('[data-deck]')
-
 const scoreElem = document.querySelector('[data-score]')
 const wagerElem = document.querySelector('[data-wager]')
 const chipsElem = document.querySelector('[data-chips]')
-
 const betsElem = document.querySelector('[data-bets-button]')
 const startScreenElem = document.querySelector('[data-start-button]')
 const playButtonElem = document.querySelector('[data-play-button]')
@@ -61,9 +59,7 @@ const quitButtonElem = document.querySelector('[data-quit-button]')
 const modalHeaderElem = document.querySelector('[data-header]')
 const modalBodyElem = document.querySelector('[data-body]')
 const numBoardElem = document.querySelector('[data-num-board]')
-
 const statsElem = document.getElementById('dataDrop')
-
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
 const statsWin = document.querySelector("[data-stats-win]")
@@ -210,7 +206,8 @@ function handleWash() {
       }, 2000);
 }
 function handleQuit(){
-    location.reload(); 
+    //location.reload(); 
+    mainMenuScreen();
 }
 function handleRestart(){
     enableHitStay()
@@ -323,7 +320,6 @@ function updateSavedStats (outcome) {
     var highestWin = getHighWin()
 
     if (outcome == "win"){
-        console.log("setting wins")
         setCookie("wins", totalWins + 1)
         setCookie("currStreak", currStreak + 1)
 
@@ -362,4 +358,21 @@ function resetCurrentBet() {
 function resetUserStats() {
     newUserCookies()
     updateDisplayedStats()
+}
+function mainMenuScreen() {
+    scoreElem.classList.add("hide")
+    deckElem.classList.add("hide")
+    wagerElem.classList.add("hide")
+    chipsElem.classList.add("hide")
+    betsElem.classList.add("hide")
+    startScreenElem.classList.remove("hide")
+    playButtonElem.classList.add("hide")
+    hitButtonElem.classList.add("hide")
+    stayButtonElem.classList.add("hide")
+    restartButtonElem.classList.add("hide")
+    quitButtonElem.classList.add("hide")  
+    numBoardElem.classList.add("hide") 
+    resetHand()
+    clearCardDiv()
+    resetTotalBet()
 }

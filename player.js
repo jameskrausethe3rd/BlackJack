@@ -8,6 +8,7 @@ import {
 import { getCookie, setCookie } from "./cookies.js";
 
 let playerHand = []
+let playerCards = []
 let pickedCard
 
 export function playerTurn() {
@@ -18,10 +19,12 @@ export function getPlayerScore (){
 }
 function createPlayerCards() {
     const numCards = document.querySelectorAll('[id=playerCard]').length
+    const playerHandDiv = document.getElementById("playerHand")
 
     pickedCard = dealCards()
     playerHand.push(getCardValue(pickedCard))
-
+    playerCards.push(pickedCard)
+    
     const backCard = document.createElement("img")
     const frontCard = document.createElement("img")
     const cardDiv = document.createElement("div")
@@ -39,10 +42,12 @@ function createPlayerCards() {
     cardDivFlipCont.setAttribute('id', "faceUp")
     frontCard.src = "imgs/card.png" 
     backCard.src = "imgs/cards/" + pickedCard + ".png"
+    backCard.classList.add("cardHolder")
     frontCard.title = pickedCard.replaceAll("_", " ")
     setCard(cardDiv, numCards)
     addCard(cardDiv)
 
+    playerHandDiv.appendChild(cardDiv)
     cardDiv.appendChild(cardDivFlipCont)
     cardDivFlipCont.appendChild(cardDivflipper)
     cardDivflipper.appendChild(cardFront)
@@ -53,8 +58,8 @@ function createPlayerCards() {
 }
 export function resetPlayerHand() {
     playerHand = []
+    playerCards = []
 }
-
 export function getWins() {
     return parseInt(getCookie("wins"))
 }
@@ -82,4 +87,7 @@ export function newUserCookies() {
     setCookie("highestWin", 0)
     setCookie("returningUser", "true")
     setCookie("chip", 1000)
+}
+export function getPlayerCards() {
+    return playerCards;
 }

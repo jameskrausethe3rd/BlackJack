@@ -6,6 +6,8 @@
 body {
     font-family:Arial;
     margin-top: 10vmin;
+    margin-left: 0;
+    margin-right: 0;
     display: flex;
     background-color: #9d79bc;
     justify-content: center;
@@ -46,14 +48,17 @@ body {
 }
 .gameNum {
     position: absolute;
-    right: 0%;
-    width: 18vmin;
+    right: 0;
+    width: 20vmin;
+    padding-left: 1vmin;
+    padding-right: 1vmin;
 }
 .gameNum div {
     top: 1vmin;
 }
 .gameNum div span {
    font-size: 3vmin;
+   white-space: nowrap;
 }
 
 /* Gameplay buttons  */
@@ -442,14 +447,86 @@ body {
 
 .playerList {
     position: absolute;
-    top: 70%;
-    padding: 2vmin;
+    top: 10vmin;
+    left: 5vmin;
     outline: 5px solid black;
+    background-color: #eee;
 }
 .playerList span {
     display: table;
-    margin: 0 auto;
+    padding: .5vmin;
+    left: 0;
+}
+.playerList img {
+    width: 6vmin;
+}
+.playerInfo {
+    position: absolute;
+    top: 7vmin;
+    left: 5vmin;
 }
 .you {
     color: gold;
+}
+.playerNameContainer{
+    width: 30vmin;
+    background-color: #eee;
+}
+ /* Style the button that is used to open and close the collapsible content */
+ .collapsible {
+    background-color: #eee;
+    cursor: pointer;
+    width: 30vmin;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 2vmin;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .collapsible:hover {
+    background-color: #ccc;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .playerNameContent {
+    display: none;
+    overflow: hidden;
+    background-color: #ccc;
+  } 
+
+
+@media only screen and (max-width: 768px) {
+    .playerList {
+        position: absolute;
+        top: 100vmin;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    .playerList span {
+        display: table;
+        font-size: 3.5vmin;
+        left: 0;
+    }
+    .playerList img {
+        width: 15vmin;
+    }
+    .playerNameContainer{
+        width: 75vmin;
+    }
+    .playerInfo {
+        position: absolute;
+        top: 90vmin;
+        left: 10vmin;
+        padding: 2vmin; 
+        font-size: 3.5vmin;
+    }
+    .playerInfo input {
+        font-size: 3vmin;
+    }
+    .buttons {
+        position: absolute;
+        top: 55vmin;      
+    }
+
 }

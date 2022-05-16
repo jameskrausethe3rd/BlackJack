@@ -1,3 +1,5 @@
+import { getPlayerCards } from "./player.js";
+
 function randomFromArray (array) {
     return array[Math.floor(Math.random() * array.length)];
 }
@@ -16,12 +18,29 @@ function createName() {
     let playerRef;
     let players = {};
     let playerElements = {};
+    
+    const playerNameInput = document.querySelector("#player-name")
+    const playerHandContainer = document.getElementById("playerHand")
+    
+    function addPlayerCardFirebase() {
+        var cards = {}
+        var obj = {}
+        var hand = getPlayerCards()
+        hand.forEach((card, index) => {
+            var cardNum = ("card" + (index+1))
+            obj[cardNum] = card
+        })
+        cards["cardsInHand"] = obj
+        playerRef.update(cards)
+        
+}
 
     function initGame() {
         const allPlayersRef = firebase.database().ref(`players`);
         const playerListContainer = document.getElementById("playerList")
     
         allPlayersRef.on("value", (snapshot) => {
+
             //When a change happens
             players = snapshot.val() || {};
             Object.keys(players).forEach((key) => {
@@ -29,8 +48,44 @@ function createName() {
                 let el = playerElements[key];
 
                 el.querySelector(".playerName").innerText = playerState.name;
-            });
+                const cardDivs = el.querySelector(".playerNameContent")
+                if (playerState.cardsInHand){
+                    var obj = playerState.cardsInHand
 
+                    Object.keys(obj).forEach(key => {
+                        if(!el.querySelector("#" + key)){
+                            var img = document.createElement("img")
+                            img.setAttribute('id', key)
+                            img.src = "imgs/cards/" + obj[key] + ".png";  
+                            cardDivs.appendChild(img)   
+                        }
+                      }); 
+                } else if (!playerState.cardsInHand) {
+                    var images = el.getElementsByTagName('img');
+                    var l = images.length;
+                    for (var i = 0; i < l; i++) {
+                        images[0].parentNode.removeChild(images[0]);
+                    }
+                }
+
+                var coll = document.getElementsByClassName("collapsible");
+
+                for (let i = 0; i < coll.length; i++) {
+                    if(coll[i].getAttribute('listener') !== 'true') {
+                        coll[i].setAttribute('listener', 'true');
+                        coll[i].addEventListener("click", function() {
+                            this.classList.toggle("active");
+                            var child = this.firstChild;
+                            var content = child.nextElementSibling.nextElementSibling
+                            if (content.style.display === "block") {
+                            content.style.display = "none";
+                            } else {
+                            content.style.display = "block";
+                            }
+                        });
+                    }
+                } 
+            });
         })
         allPlayersRef.on("child_added", (snapshot) => {
             //When a new node is added
@@ -43,9 +98,9 @@ function createName() {
                 playerElement.classList.add("you")
             }
             playerElement.innerHTML = (`
-                <div class="playerNameContainer">
+                <div class="playerNameContainer collapsible">
                     <span class="playerName"></span>
-                    <img src="imgs/card.png" width="10%">
+                    <div class="playerNameContent"></div>
                 </div>`
             );
             playerElements[addedPlayer.id] = playerElement;
@@ -60,25 +115,40 @@ function createName() {
             playerListContainer.removeChild(playerElements[removedKey]);
             delete playerElements[removedKey];
         })
-    }
 
+        //Change the player name
+        playerNameInput.addEventListener("change", (e) => {
+            const newName = e.target.value || createName();
+            playerNameInput.value = newName;
+            playerRef.update({
+                name: newName
+            })
+        })
+
+        //Add the player card
+        playerHandContainer.addEventListener("DOMNodeInserted", (e) =>{
+            if(e.target.className == "cardHolder") {
+               addPlayerCardFirebase()
+            }
+        })
+
+        //Resets cards in hand
+        document.getElementById('restart').addEventListener("click", () => {
+            playerRef.update({
+                cardsInHand : null})
+            });
+    }
     firebase.auth().onAuthStateChanged((user) => {
-        console.log(user)
         if (user) {
-            console.log("You're logged in!")
             playerID = user.uid;
             playerRef = firebase.database().ref(`players/${playerID}`);
 
             const name = createName();
+            playerNameInput.value = name;
 
             playerRef.set({
                 id: playerID,
                 name,
-                card1: null,
-                card2: null,
-                card3: null,
-                card4: null,
-                card5: null,
                 handVal: 0
             })
 
@@ -89,13 +159,11 @@ function createName() {
         } else {
             console.log("You're not logged in!")
         }
-    })
-    
+    })  
     firebase.auth().signInAnonymously().catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
         //..
         console.log(errorCode, errorMessage);
     });
-
 })();

@@ -12,6 +12,8 @@
     <div class="deck hide" data-deck>
       <img src="imgs/card.png">
     </div>
+    <div id="playerHand">
+    </div>
     <div class="bet hide" data-bets-button>
       <table>
         <tr class="chipPics">
@@ -22,7 +24,7 @@
           <td id="betAll"><img src="imgs/chipAll.png" alt=""></td>
         </tr>
         <tr class="resetBetButton">
-          <td align="center" colspan="5" id="resetBet"><button>Reset</button></td>
+          <td  style="text-align: center; vertical-align: middle;" colspan="5" id="resetBet"><button>Reset</button></td>
         </tr>
       </table>
     </div>
@@ -73,6 +75,12 @@
   <div class="playerList" id="playerList">
   <span>Current Players</span>
   </div>
+  <div class="playerInfo">
+    <div>
+      <label for="player-name">Name</label>
+      <input id="player-name" maxlegnth="10" type="text">
+    </div>
+  </div>
   <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
@@ -106,6 +114,6 @@
     </script>
 
   <script src="script.js" type="module"></script>
-  <script src="multiplayer.js"></script>
+  <script src="multiplayer.js" type="module"></script>
 </body>
 </html>
