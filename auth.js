@@ -45,9 +45,9 @@ login.addEventListener('submit', (e) => {
     playerRef.remove()
 
     auth.signInWithEmailAndPassword(email, password).then((cred) => {
+        //location.reload()
         const modal = document.getElementById("loginModal");
         modal.style.display = "none"; 
         login.reset();
-        location.reload()
     })
 })

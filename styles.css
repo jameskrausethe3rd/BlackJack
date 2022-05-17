@@ -522,6 +522,14 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
+    .nav a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 2vmin;
+        text-decoration: none;
+        font-size: 5vmin;
+    }
     .playerList {
         position: absolute;
         top: 90vmin;

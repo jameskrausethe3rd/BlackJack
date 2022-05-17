@@ -18,6 +18,7 @@ function createName() {
     let playerRef;
     let players = {};
     let playerElements = {};
+    let numPlayers = 0;
     
     const playerNameInput = document.querySelector("#player-name")
     const playerHandContainer = document.getElementById("playerHand")
@@ -49,6 +50,10 @@ function createName() {
                 el.querySelector(".playerName").innerText = playerState.name;
                 const cardDivs = el.querySelector(".playerNameContent")
 
+                //Update counter
+                var counter = document.getElementById("currentPlayers");
+                counter.innerText = "Current Players: " + numPlayers
+
                 //If the cardsInHand element exists:
                 if (playerState.cardsInHand){
                     var obj = playerState.cardsInHand
@@ -72,10 +77,12 @@ function createName() {
         allPlayersRef.on("child_added", (snapshot) => {
             //When a new node is added
             //ie: New player joins
-    
+
             const addedPlayer = snapshot.val();
             const playerElement = document.createElement("div");
-    
+
+            numPlayers += 1;
+
             if (addedPlayer.id == playerID) {
                 playerElement.classList.add("you")
             }
@@ -116,6 +123,8 @@ function createName() {
 
             playerListContainer.removeChild(playerElements[removedKey]);
             delete playerElements[removedKey];
+
+            numPlayers -= 1;
         })
 
         //Change the player name
@@ -151,7 +160,7 @@ function createName() {
                 cardsInHand : null})
             });
     }
-    firebase.auth().onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
         if (user) {
             let name
             playerID = user.uid;

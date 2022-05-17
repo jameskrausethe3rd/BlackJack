@@ -66,6 +66,8 @@ const modal = document.getElementById("myModal");
 const signUpModal = document.getElementById("signUpModal");
 const loginModal = document.getElementById("loginModal");
 const span = document.getElementsByClassName("close")[0];
+const loginClose = document.getElementById("loginClose")
+const signupClose = document.getElementById("signupClose")
 const statsWin = document.querySelector("[data-stats-win]")
 const statsLoss = document.querySelector("[data-stats-loss]")
 const statsWash = document.querySelector("[data-stats-wash]")
@@ -75,6 +77,12 @@ const statsHighWin = document.querySelector("[data-stats-highwin]")
 
 span.onclick = function() {
   modal.style.display = "none";
+}
+loginClose.onclick = function() {
+    loginModal.style.display = "none";
+}
+signupClose.onclick = function() {
+    signUpModal.style.display = "none";
 }
 window.onclick = function(event) {
   if (event.target == modal) {

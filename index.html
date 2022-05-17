@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
 </head>
 <body>
   <div class="nav">
@@ -80,12 +86,12 @@
     </div>
   </div> 
   <div class="playerList" id="playerList">
-  <span>Current Players</span>
+  <span id="currentPlayers">Current Players</span>
   </div>
   <div class="playerInfo">
     <div>
       <label for="player-name">Name</label>
-      <input id="player-name" maxlegnth="10" type="text">
+      <input id="player-name" type="text">
     </div>
   </div>
   <div id="myModal" class="modal">
@@ -108,7 +114,7 @@
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
-        <span class="close">&times;</span>
+        <span class="close" id="signupClose">&times;</span>
         <h2 data-header>Sign Up</h2>
       </div>
       <form id="signup-form">
@@ -129,7 +135,7 @@
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
-        <span class="close">&times;</span>
+        <span class="close" id="loginClose">&times;</span>
         <h2 data-header>Login</h2>
       </div>
       <form id="login-form">
