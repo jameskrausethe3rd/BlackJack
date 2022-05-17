@@ -33,8 +33,7 @@ function createName() {
         cards["cardsInHand"] = obj
         playerRef.update(cards)
         
-}
-
+    }
     function initGame() {
         const allPlayersRef = firebase.database().ref(`players`);
         const playerListContainer = document.getElementById("playerList")
@@ -49,9 +48,10 @@ function createName() {
 
                 el.querySelector(".playerName").innerText = playerState.name;
                 const cardDivs = el.querySelector(".playerNameContent")
+
+                //If the cardsInHand element exists:
                 if (playerState.cardsInHand){
                     var obj = playerState.cardsInHand
-
                     Object.keys(obj).forEach(key => {
                         if(!el.querySelector("#" + key)){
                             var img = document.createElement("img")
@@ -66,25 +66,7 @@ function createName() {
                     for (var i = 0; i < l; i++) {
                         images[0].parentNode.removeChild(images[0]);
                     }
-                }
-
-                var coll = document.getElementsByClassName("collapsible");
-
-                for (let i = 0; i < coll.length; i++) {
-                    if(coll[i].getAttribute('listener') !== 'true') {
-                        coll[i].setAttribute('listener', 'true');
-                        coll[i].addEventListener("click", function() {
-                            this.classList.toggle("active");
-                            var child = this.firstChild;
-                            var content = child.nextElementSibling.nextElementSibling
-                            if (content.style.maxHeight) {
-                            content.style.maxHeight = null;
-                            } else {
-                            content.style.maxHeight = content.scrollHeight + "px";
-                            }
-                        });
-                    }
-                } 
+                }     
             });
         })
         allPlayersRef.on("child_added", (snapshot) => {
@@ -106,6 +88,26 @@ function createName() {
             playerElements[addedPlayer.id] = playerElement;
             playerElement.querySelector(".playerName").innerText = addedPlayer.name;
             playerListContainer.appendChild(playerElement);
+
+            //Create collapsible event listeners for drop down
+            var coll = document.getElementsByClassName("collapsible");
+            for (let i = 0; i < coll.length; i++) {
+                if(coll[i].getAttribute('listener') !== 'true') {
+                    coll[i].setAttribute('listener', 'true');
+                    coll[i].addEventListener("click", function() {
+                        this.classList.toggle("active");
+                        var child = this.firstChild;
+                        var content = child.nextElementSibling.nextElementSibling
+                        if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.height = content.scrollHeight + "px";
+                        }
+                    });
+                }
+            } 
+
         })
 
         //Remove name of player that has left
@@ -118,8 +120,15 @@ function createName() {
 
         //Change the player name
         playerNameInput.addEventListener("change", (e) => {
+            const currentUser = auth.currentUser
             const newName = e.target.value || createName();
             playerNameInput.value = newName;
+
+            if(!currentUser.isAnonymous){
+                currentUser.updateProfile({
+                    displayName: newName
+                  })
+            }
             playerRef.update({
                 name: newName
             })
@@ -144,30 +153,42 @@ function createName() {
     }
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+            let name
             playerID = user.uid;
             playerRef = firebase.database().ref(`players/${playerID}`);
 
-            const name = createName();
-            playerNameInput.value = name;
-
+            if (!user.isAnonymous){
+                if (user.displayName){
+                    name = user.displayName;
+                } else {
+                    name = createName();
+                    user.updateProfile({
+                        displayName: name
+                      })
+                }
+                playerNameInput.value = name;
+            } else{
+                name = createName();
+                playerNameInput.value = name;
+            }
             playerRef.set({
                 id: playerID,
                 name,
                 handVal: 0
             })
-
             playerRef.onDisconnect().remove();
 
             initGame();
 
         } else {
             console.log("You're not logged in!")
+                firebase.auth().signInAnonymously().catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                //..
+                console.log(errorCode, errorMessage);
+            });
         }
-    })  
-    firebase.auth().signInAnonymously().catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        //..
-        console.log(errorCode, errorMessage);
-    });
+    })
+
 })();

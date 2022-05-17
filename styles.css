@@ -71,7 +71,9 @@ body {
 }
 .buttons {
     position: absolute;
-    top: 75vmin;      
+    top: 75vmin;   
+    left: 50%;
+    transform: translate(-50%,-50%);   
 }
 .playButton {
 	box-shadow: 0px 10px 14px -7px #1c1b18;
@@ -481,26 +483,48 @@ body {
     text-align: left;
     outline: none;
     font-size: 2vmin;
-  }
+}
   
   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  .active, .collapsible:hover {
+.active, .collapsible:hover {
     background-color: #ccc;
-  }
+}
   
   /* Style the collapsible content. Note: hidden by default */
-  .playerNameContent {
+.playerNameContent {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     background-color: #ccc;
-  } 
-
+} 
+.nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.nav li {
+    float: right;
+}
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+.nav a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
 
 @media only screen and (max-width: 768px) {
     .playerList {
         position: absolute;
-        top: 100vmin;
+        top: 90vmin;
         left: 50%;
         transform: translate(-50%);
     }
@@ -517,7 +541,7 @@ body {
     }
     .playerInfo {
         position: absolute;
-        top: 90vmin;
+        top: 80vmin;
         left: 10vmin;
         padding: 2vmin; 
         font-size: 3.5vmin;
@@ -527,7 +551,8 @@ body {
     }
     .buttons {
         position: absolute;
-        top: 55vmin;      
+        top: 65vmin;   
+        left: 50%;
+        transform: translate(-50%,-50%);   
     }
-
 }

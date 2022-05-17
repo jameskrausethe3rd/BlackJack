@@ -36,6 +36,8 @@ document.getElementById('stay').addEventListener("click", handleStay);
 document.getElementById('quit').addEventListener("click", handleQuit);
 document.getElementById('quit').addEventListener("click", handleQuit);
 document.getElementById('dataDrop').addEventListener("click", displayStats);
+document.getElementById('sign-up').addEventListener("click", signUp);
+document.getElementById('login').addEventListener("click", login);
 document.getElementById('restart').addEventListener("click", handleRestart);
 document.getElementById('bet1').addEventListener("click", () => playBet("custom"));
 document.getElementById('bet10').addEventListener("click", () => playBet(10));
@@ -61,6 +63,8 @@ const modalBodyElem = document.querySelector('[data-body]')
 const numBoardElem = document.querySelector('[data-num-board]')
 const statsElem = document.getElementById('dataDrop')
 const modal = document.getElementById("myModal");
+const signUpModal = document.getElementById("signUpModal");
+const loginModal = document.getElementById("loginModal");
 const span = document.getElementsByClassName("close")[0];
 const statsWin = document.querySelector("[data-stats-win]")
 const statsLoss = document.querySelector("[data-stats-loss]")
@@ -388,4 +392,10 @@ function mainMenuScreen() {
     resetHand()
     clearCardDiv()
     resetTotalBet()
+}
+function signUp() {
+    signUpModal.style.display = "block";   
+}
+function login() {
+    loginModal.style.display = "block";
 }
